@@ -72,84 +72,67 @@
     <button class="filter" data-filter="modeling" aria-pressed="false">Modeling</button>
   </div>
 
-  <div class="cards">
+  <div class="work-list">
 
-    <button class="card reveal" data-cats="quant" data-modal="m-algo" aria-haspopup="dialog">
-      <div class="thumb">
-        <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect class="chart-bg" width="400" height="225"/>
-          <g stroke="rgba(150,135,110,.22)" stroke-width="1"><line x1="0" y1="56" x2="400" y2="56"/><line x1="0" y1="112" x2="400" y2="112"/><line x1="0" y1="168" x2="400" y2="168"/></g>
-          <path d="M0,180 L48,158 L92,168 L132,128 L172,142 L212,100 L252,112 L292,64 L332,80 L400,34 L400,225 L0,225 Z" fill="#cf924f" fill-opacity="0.14"/>
-          <path d="M0,180 L48,158 L92,168 L132,128 L172,142 L212,100 L252,112 L292,64 L332,80 L400,34" fill="none" stroke="#e7ad6a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
-          <circle cx="292" cy="64" r="3.6" fill="#e7ad6a"/><circle cx="332" cy="80" r="3.2" fill="#cf924f"/>
-        </svg>
+    <button class="work-row reveal" data-cats="quant" data-modal="m-algo" aria-haspopup="dialog">
+      <span class="work-num">01</span>
+      <div class="work-row-info">
+        <span class="work-row-kicker">Quant · Automation <span class="yr">2026 — Present</span></span>
+        <h3 class="work-row-title">Algorithmic Trading System</h3>
+        <p class="work-row-desc">End-to-end automated equity-trading bot on the Alpaca paper API — premarket scanning, rule-based execution on a simulated $100K book, and a read-only P&amp;L dashboard.</p>
+        <div class="work-row-stack"><span>Python 3.12</span><span>alpaca-py</span><span>FastAPI</span><span>pandas</span></div>
       </div>
-      <div class="body">
-        <span class="kicker">Quant · Automation <span class="yr">2026 — Present</span></span>
-        <h3>Algorithmic Trading System</h3>
-        <p>End-to-end automated equity-trading bot on the Alpaca paper API — premarket scanning, rule-based execution on a simulated $100K book, and a read-only P&amp;L dashboard.</p>
-        <div class="stack"><span>Python 3.12</span><span>alpaca-py</span><span>FastAPI</span><span>pandas · numpy</span></div>
-        <span class="link-arrow more">View project
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </span>
+      <div class="work-row-thumb">
+        <canvas class="card-canvas" data-canvas-type="equity-curve" aria-hidden="true"></canvas>
       </div>
+      <span class="work-row-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      </span>
     </button>
 
-    <button class="card reveal" data-d="1" data-cats="data" data-modal="m-sec" aria-haspopup="dialog">
-      <div class="thumb">
-        <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect class="chart-bg" width="400" height="225"/>
-          <g stroke="rgba(150,135,110,.22)" stroke-width="1"><line x1="34" y1="52" x2="400" y2="52"/><line x1="34" y1="105" x2="400" y2="105"/><line x1="34" y1="158" x2="400" y2="158"/></g>
-          <line x1="34" y1="22" x2="34" y2="196" stroke="rgba(150,135,110,.36)"/>
-          <g fill="#cf924f" fill-opacity="0.82">
-            <rect x="56" y="124" width="32" height="72" rx="2"/><rect x="106" y="92" width="32" height="104" rx="2"/><rect x="156" y="138" width="32" height="58" rx="2"/><rect x="206" y="72" width="32" height="124" rx="2"/><rect x="256" y="104" width="32" height="92" rx="2"/>
-          </g>
-          <rect x="306" y="50" width="32" height="146" rx="2" fill="#e7ad6a"/>
-          <path d="M72,150 L122,112 L172,162 L222,96 L272,132 L322,72" fill="none" stroke="rgba(168,156,134,.65)" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"/>
-        </svg>
+    <button class="work-row reveal" data-d="1" data-cats="data" data-modal="m-sec" aria-haspopup="dialog">
+      <span class="work-num">02</span>
+      <div class="work-row-info">
+        <span class="work-row-kicker">Data · NLP <span class="yr">2025 — 2026</span></span>
+        <h3 class="work-row-title">SEC Earnings Sentiment &amp; Fundamental Screener</h3>
+        <p class="work-row-desc">Pipeline ingesting 10-K / 10-Q filings from SEC EDGAR, scoring MD&amp;A and risk-factor language quarter-over-quarter, and blending sentiment with valuation metrics into a stock screener.</p>
+        <div class="work-row-stack"><span>Python</span><span>SEC EDGAR API</span><span>NLP</span><span>pandas</span></div>
       </div>
-      <div class="body">
-        <span class="kicker">Data · NLP <span class="yr">2025 — 2026</span></span>
-        <h3>SEC Earnings Sentiment &amp; Fundamental Screener</h3>
-        <p>Pipeline ingesting 10-K / 10-Q filings from SEC EDGAR, scoring MD&amp;A and risk-factor language quarter-over-quarter, and blending sentiment with valuation metrics into a stock screener.</p>
-        <div class="stack"><span>Python</span><span>SEC EDGAR API</span><span>NLP</span><span>pandas</span></div>
-        <span class="link-arrow more">View project
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </span>
+      <div class="work-row-thumb">
+        <canvas class="card-canvas" data-canvas-type="filings-feed" aria-hidden="true"></canvas>
       </div>
+      <span class="work-row-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      </span>
     </button>
 
-    <button class="card reveal" data-d="2" data-cats="modeling" data-modal="m-math" aria-haspopup="dialog">
-      <div class="thumb">
-        <svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect class="chart-bg" width="400" height="225"/>
-          <g stroke="rgba(150,135,110,.22)" stroke-width="1"><line x1="0" y1="56" x2="400" y2="56"/><line x1="0" y1="112" x2="400" y2="112"/><line x1="0" y1="168" x2="400" y2="168"/></g>
-          <path d="M0,202 C120,190 240,150 400,38 L400,225 L0,225 Z" fill="#cf924f" fill-opacity="0.10"/>
-          <path d="M0,202 C120,190 240,150 400,38" fill="none" stroke="#e7ad6a" stroke-width="2.6" stroke-linecap="round"/>
-          <path d="M0,202 C140,196 260,176 400,118" fill="none" stroke="#cf924f" stroke-width="2" stroke-opacity="0.75" stroke-linecap="round"/>
-          <path d="M0,202 C120,198 240,189 400,164" fill="none" stroke="#9a8d75" stroke-width="1.6" stroke-dasharray="3 4" stroke-linecap="round"/>
-        </svg>
+    <button class="work-row reveal" data-d="2" data-cats="modeling" data-modal="m-math" aria-haspopup="dialog">
+      <span class="work-num">03</span>
+      <div class="work-row-info">
+        <span class="work-row-kicker">Modeling · R <span class="yr">2023</span></span>
+        <h3 class="work-row-title">Mathematical Modeling for Finance</h3>
+        <p class="work-row-desc">Amortization and savings-growth models in R simulating variable-rate mortgage scenarios, with regression forecasting and ±200bps interest-rate stress tests on borrower outcomes.</p>
+        <div class="work-row-stack"><span>R Studio</span><span>Excel</span><span>Regression</span><span>Stress Testing</span></div>
       </div>
-      <div class="body">
-        <span class="kicker">Modeling · R <span class="yr">2023</span></span>
-        <h3>Mathematical Modeling for Finance</h3>
-        <p>Amortization and savings-growth models in R simulating variable-rate mortgage scenarios, with regression forecasting and ±200bps interest-rate stress tests on borrower outcomes.</p>
-        <div class="stack"><span>R Studio</span><span>Excel</span><span>Regression</span><span>Stress Testing</span></div>
-        <span class="link-arrow more">View project
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </span>
+      <div class="work-row-thumb">
+        <canvas class="card-canvas" data-canvas-type="stress-curves" aria-hidden="true"></canvas>
       </div>
+      <span class="work-row-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      </span>
     </button>
 
-    <a class="card reveal" data-d="3" href="contact.html" style="border-style:dashed;">
-      <div class="body" style="gap:14px;justify-content:center;min-height:220px;">
-        <span class="kicker">In the works <span class="yr">2026</span></span>
-        <h3>More projects in progress</h3>
-        <p>Backtesting framework, options-flow analytics, and a personal-finance data warehouse are next on the bench. Want the early look?</p>
-        <span class="link-arrow more">Get in touch
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-        </span>
+    <a class="work-row work-row--cta reveal" data-d="3" href="contact.html">
+      <span class="work-num">+</span>
+      <div class="work-row-info">
+        <span class="work-row-kicker">In the works <span class="yr">2026</span></span>
+        <h3 class="work-row-title">More projects in progress</h3>
+        <p class="work-row-desc">Backtesting framework, options-flow analytics, and a personal-finance data warehouse are next on the bench. Want the early look?</p>
       </div>
+      <div class="work-row-thumb"></div>
+      <span class="work-row-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      </span>
     </a>
 
   </div>
@@ -232,6 +215,19 @@
   </div>
 </template>
 
+<section class="footer-marquee" aria-hidden="true">
+  <div class="footer-marquee-track">
+    <span>Available for collaboration</span>
+    <span>Fremont · California</span>
+    <span>Est. 2026</span>
+    <span>Audit · Models · Code</span>
+    <span>Available for collaboration</span>
+    <span>Fremont · California</span>
+    <span>Est. 2026</span>
+    <span>Audit · Models · Code</span>
+  </div>
+</section>
+
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-top">
@@ -262,6 +258,18 @@
   <div class="modal-card"><div class="modal-card-inner"></div></div>
 </div>
 
-<script src="main.js"></script>
+<!-- page transition overlay -->
+<div class="page-transition" aria-hidden="true">
+  <span class="label">↗ navigating</span>
+</div>
+
+<!-- custom cursor (auto-disabled on touch + reduced-motion) -->
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="main.js" defer></script>
 </body>
 </html>

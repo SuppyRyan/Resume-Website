@@ -67,22 +67,24 @@
   </div>
 </section>
 
-<!-- content pillars -->
+<!-- content pillars (also filters the gallery below) -->
 <section class="section wrap section--tight" aria-labelledby="pillars-h">
   <div class="section-head reveal">
     <span class="eyebrow">Content Pillars</span>
     <h2 id="pillars-h">What I'll be making.</h2>
+    <p class="muted" style="font-size:14.5px;">Tap any pillar to filter the gallery below.</p>
   </div>
-  <div class="chips" style="gap:10px;">
-    <span class="chip chip--accent">Fashion &amp; fits</span>
-    <span class="chip chip--accent">Food &amp; cooking</span>
-    <span class="chip">Anime &amp; manga</span>
-    <span class="chip">Plastic model kits</span>
-    <span class="chip">Lego builds</span>
-    <span class="chip">Basketball &amp; volleyball</span>
-    <span class="chip">Travel</span>
-    <span class="chip">Weightlifting</span>
-    <span class="chip">K-drama picks</span>
+  <div class="filters" role="tablist" aria-label="Filter gallery by content pillar">
+    <button class="filter" data-filter="all" aria-pressed="true">All</button>
+    <button class="filter" data-filter="fashion" aria-pressed="false">Fashion &amp; fits</button>
+    <button class="filter" data-filter="food" aria-pressed="false">Food &amp; cooking</button>
+    <button class="filter" data-filter="anime" aria-pressed="false">Anime &amp; manga</button>
+    <button class="filter" data-filter="models" aria-pressed="false">Plastic model kits</button>
+    <button class="filter" data-filter="lego" aria-pressed="false">Lego builds</button>
+    <button class="filter" data-filter="sports" aria-pressed="false">Basketball &amp; volleyball</button>
+    <button class="filter" data-filter="travel" aria-pressed="false">Travel</button>
+    <button class="filter" data-filter="lifting" aria-pressed="false">Weightlifting</button>
+    <button class="filter" data-filter="kdrama" aria-pressed="false">K-drama picks</button>
   </div>
 </section>
 
@@ -95,39 +97,39 @@
   </div>
 
   <div class="gallery reveal">
-    <button class="tile" data-lightbox="#" data-caption="Fashion — editorial fit, autumn palette">
+    <button class="tile" data-cats="fashion" data-lightbox="#" data-caption="Fashion — editorial fit, autumn palette">
       <div class="ph" style="height:320px;background:linear-gradient(150deg,#241a10,#a96c30 70%,#e7ad6a);"></div>
       <span class="ov"><span>Fashion · Editorial</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="Food — slow-cooked, plated">
+    <button class="tile" data-cats="food" data-lightbox="#" data-caption="Food — slow-cooked, plated">
       <div class="ph" style="height:240px;background:radial-gradient(circle at 28% 22%,#e7ad6a,#a96c30 55%,#2a1f12);"></div>
       <span class="ov"><span>Food · Cooking</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="Plastic model kit — panel-line build">
+    <button class="tile" data-cats="models" data-lightbox="#" data-caption="Plastic model kit — panel-line build">
       <div class="ph" style="height:300px;background:linear-gradient(135deg,#14110a,#7a4a22 60%,#caa15f);"></div>
       <span class="ov"><span>Model Kits</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="Travel — golden hour, somewhere new">
+    <button class="tile" data-cats="travel" data-lightbox="#" data-caption="Travel — golden hour, somewhere new">
       <div class="ph" style="height:360px;background:linear-gradient(120deg,#3a2a18,#cf924f 110%);"></div>
       <span class="ov"><span>Travel</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="Basketball — court, late session">
+    <button class="tile" data-cats="sports" data-lightbox="#" data-caption="Basketball — court, late session">
       <div class="ph" style="height:250px;background:linear-gradient(160deg,#2a1f12,#a4602c 70%,#bd7838);"></div>
       <span class="ov"><span>Basketball</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="Lego — finished display build">
+    <button class="tile" data-cats="lego" data-lightbox="#" data-caption="Lego — finished display build">
       <div class="ph" style="height:300px;background:radial-gradient(circle at 70% 30%,#e7ad6a,#844c1f 60%,#1c170f);"></div>
       <span class="ov"><span>Lego Builds</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="Weightlifting — progress log">
+    <button class="tile" data-cats="lifting" data-lightbox="#" data-caption="Weightlifting — progress log">
       <div class="ph" style="height:230px;background:linear-gradient(135deg,#1c170f,#7a4a22);"></div>
       <span class="ov"><span>Lifting</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="Anime &amp; manga — shelf + recommendations">
+    <button class="tile" data-cats="anime" data-lightbox="#" data-caption="Anime &amp; manga — shelf + recommendations">
       <div class="ph" style="height:340px;background:linear-gradient(150deg,#241a10,#bd7838 80%,#f0d9b0);"></div>
       <span class="ov"><span>Anime · Manga</span></span>
     </button>
-    <button class="tile" data-lightbox="#" data-caption="K-drama — what I'm watching">
+    <button class="tile" data-cats="kdrama" data-lightbox="#" data-caption="K-drama — what I'm watching">
       <div class="ph" style="height:260px;background:linear-gradient(120deg,#2a1f12,#a96c30);"></div>
       <span class="ov"><span>K-drama</span></span>
     </button>
@@ -150,6 +152,19 @@
 </section>
 
 </main>
+
+<section class="footer-marquee" aria-hidden="true">
+  <div class="footer-marquee-track">
+    <span>Available for collaboration</span>
+    <span>Fremont · California</span>
+    <span>Est. 2026</span>
+    <span>Audit · Models · Code</span>
+    <span>Available for collaboration</span>
+    <span>Fremont · California</span>
+    <span>Est. 2026</span>
+    <span>Audit · Models · Code</span>
+  </div>
+</section>
 
 <footer class="site-footer">
   <div class="wrap">
@@ -181,6 +196,18 @@
   <div class="modal-card"><div class="modal-card-inner"></div></div>
 </div>
 
-<script src="main.js"></script>
+<!-- page transition overlay -->
+<div class="page-transition" aria-hidden="true">
+  <span class="label">↗ navigating</span>
+</div>
+
+<!-- custom cursor (auto-disabled on touch + reduced-motion) -->
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="main.js" defer></script>
 </body>
 </html>

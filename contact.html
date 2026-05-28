@@ -108,11 +108,11 @@
             <span style="color:var(--text-dim);font-size:15px;">Content partnerships across fashion, food, and hobby spaces — see the <a href="creative.html" style="color:var(--accent-bright);">Creative page</a>.</span>
           </li>
           <li style="display:flex;gap:14px;align-items:flex-start;">
-            <span class="chip" style="flex:none;">Hello</span>
+            <span class="chip chip--accent" style="flex:none;">Hello</span>
             <span style="color:var(--text-dim);font-size:15px;">Or just say hi — I'm always glad to connect.</span>
           </li>
         </ul>
-        <p class="form-note" style="margin-top:22px;">Based in Fremont, California · usually replies within a couple of days.</p>
+        <p class="form-note" style="margin-top:22px;">I usually reply within a couple of days.</p>
       </div>
     </div>
 
@@ -120,6 +120,19 @@
 </section>
 
 </main>
+
+<section class="footer-marquee" aria-hidden="true">
+  <div class="footer-marquee-track">
+    <span>Available for collaboration</span>
+    <span>Fremont · California</span>
+    <span>Est. 2026</span>
+    <span>Audit · Models · Code</span>
+    <span>Available for collaboration</span>
+    <span>Fremont · California</span>
+    <span>Est. 2026</span>
+    <span>Audit · Models · Code</span>
+  </div>
+</section>
 
 <footer class="site-footer">
   <div class="wrap">
@@ -151,6 +164,18 @@
   <div class="modal-card"><div class="modal-card-inner"></div></div>
 </div>
 
-<script src="main.js"></script>
+<!-- page transition overlay -->
+<div class="page-transition" aria-hidden="true">
+  <span class="label">↗ navigating</span>
+</div>
+
+<!-- custom cursor (auto-disabled on touch + reduced-motion) -->
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="main.js" defer></script>
 </body>
 </html>
