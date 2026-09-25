@@ -21,15 +21,15 @@
 
 <header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="index.html" aria-label="Ryan Lin — home">
+    <a class="brand" href="/" aria-label="Ryan Lin — home">
       <span class="mark">RL</span>
       <span class="who">Ryan&nbsp;Lin <span>· Finance &amp; Data</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="index.html">Home</a>
-      <a href="work.html" class="is-active">Work</a>
-      <a href="creative.html">Creative</a>
-      <a href="contact.html">Contact</a>
+      <a href="/">Home</a>
+      <a href="/work" class="is-active">Work</a>
+      <a href="/creative">Creative</a>
+      <a href="/contact">Contact</a>
     </nav>
     <div class="nav-right">
       <button class="theme-toggle" aria-label="Switch to light theme" title="Toggle theme">
@@ -45,10 +45,10 @@
 </header>
 
 <div class="mobile-nav" id="mobile-nav">
-  <a href="index.html">Home</a>
-  <a href="work.html" class="is-active">Work</a>
-  <a href="creative.html">Creative</a>
-  <a href="contact.html">Contact</a>
+  <a href="/">Home</a>
+  <a href="/work" class="is-active">Work</a>
+  <a href="/creative">Creative</a>
+  <a href="/contact">Contact</a>
   <a href="assets/Ryan-Lin-Resume.pdf" download>Download résumé ↓</a>
   <div class="m-foot">
     <a href="https://www.linkedin.com/in/rynlin/" target="_blank" rel="noopener">LinkedIn</a>
@@ -59,7 +59,7 @@
 <main>
 
 <section class="page-intro wrap">
-  <span class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Work</span>
+  <span class="crumbs"><a href="/">Home</a> &nbsp;/&nbsp; Work</span>
   <h1>Finance &amp; data, <em class="ser">built end-to-end.</em></h1>
   <p class="lede">Projects where I take an idea from raw data and APIs to a working system — a live exam-prep platform, trading automation, NLP over filings, and quantitative modeling. Click any project for the detail.</p>
 </section>
@@ -139,7 +139,7 @@
       </span>
     </button>
 
-    <a class="work-row work-row--cta reveal" data-d="4" href="contact.html">
+    <a class="work-row work-row--cta reveal" data-d="4" href="/contact">
       <span class="work-num">+</span>
       <div class="work-row-info">
         <span class="work-row-kicker">In the works <span class="yr">2026</span></span>
@@ -280,7 +280,7 @@
       <div class="footer-cols">
         <div class="footer-col">
           <h5>Site</h5>
-          <a href="index.html">Home</a><a href="work.html">Work</a><a href="creative.html">Creative</a><a href="contact.html">Contact</a>
+          <a href="/">Home</a><a href="/work">Work</a><a href="/creative">Creative</a><a href="/contact">Contact</a>
         </div>
         <div class="footer-col">
           <h5>Elsewhere</h5>
@@ -301,18 +301,11 @@
   <div class="modal-card"><div class="modal-card-inner"></div></div>
 </div>
 
-<!-- page transition overlay -->
-<div class="page-transition" aria-hidden="true">
-  <span class="label">↗ navigating</span>
-</div>
 
-<!-- custom cursor (auto-disabled on touch + reduced-motion) -->
-<div class="cursor-ring" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
 
-<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 <script src="main.js" defer></script>
 </body>
 </html>

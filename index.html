@@ -24,15 +24,15 @@
 <!-- ============ HEADER ============ -->
 <header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="index.html" aria-label="Ryan Lin — home">
+    <a class="brand" href="/" aria-label="Ryan Lin — home">
       <span class="mark">RL</span>
       <span class="who">Ryan&nbsp;Lin <span>· Finance &amp; Data</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="index.html" class="is-active">Home</a>
-      <a href="work.html">Work</a>
-      <a href="creative.html">Creative</a>
-      <a href="contact.html">Contact</a>
+      <a href="/" class="is-active">Home</a>
+      <a href="/work">Work</a>
+      <a href="/creative">Creative</a>
+      <a href="/contact">Contact</a>
     </nav>
     <div class="nav-right">
       <button class="theme-toggle" aria-label="Switch to light theme" title="Toggle theme">
@@ -49,10 +49,10 @@
 
 <!-- mobile drawer -->
 <div class="mobile-nav" id="mobile-nav">
-  <a href="index.html" class="is-active">Home</a>
-  <a href="work.html">Work</a>
-  <a href="creative.html">Creative</a>
-  <a href="contact.html">Contact</a>
+  <a href="/" class="is-active">Home</a>
+  <a href="/work">Work</a>
+  <a href="/creative">Creative</a>
+  <a href="/contact">Contact</a>
   <a href="assets/Ryan-Lin-Resume.pdf" download>Download résumé ↓</a>
   <div class="m-foot">
     <a href="https://www.linkedin.com/in/rynlin/" target="_blank" rel="noopener">LinkedIn</a>
@@ -83,8 +83,8 @@
         <a class="btn btn--primary" href="assets/Ryan-Lin-Resume.pdf" download>Download résumé
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
         </a>
-        <a class="btn btn--ghost" href="work.html">View work</a>
-        <a class="link-arrow" href="contact.html">Get in touch
+        <a class="btn btn--ghost" href="/work">View work</a>
+        <a class="link-arrow" href="/contact">Get in touch
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
         </a>
       </div>
@@ -129,7 +129,7 @@
       <span class="margin-note">python · R · alpaca · 2025 →</span>
       <p>Now I build on the quant side: an end-to-end automated equity-trading system on the Alpaca API, an NLP screener over SEC EDGAR filings, and quantitative finance models in R.</p>
       <p>This site collects that work — and a corner for the creative things I'm making next.</p>
-      <a class="link-arrow mt-s" href="work.html">See the projects
+      <a class="link-arrow mt-s" href="/work">See the projects
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
       </a>
     </article>
@@ -324,13 +324,13 @@
       <span class="eyebrow">Selected Work</span>
       <h2 id="feat-h">Things I've built.</h2>
     </div>
-    <a class="link-arrow" href="work.html">All projects
+    <a class="link-arrow" href="/work">All projects
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
     </a>
   </div>
 
   <div class="cards">
-    <a class="card reveal" href="work.html">
+    <a class="card reveal" href="/work">
       <div class="thumb">
         <canvas class="card-canvas" data-canvas-type="question-bank" aria-hidden="true"></canvas>
       </div>
@@ -342,7 +342,7 @@
       </div>
     </a>
 
-    <a class="card reveal" data-d="1" href="work.html">
+    <a class="card reveal" data-d="1" href="/work">
       <div class="thumb">
         <canvas class="card-canvas" data-canvas-type="equity-curve" aria-hidden="true"></canvas>
       </div>
@@ -354,7 +354,7 @@
       </div>
     </a>
 
-    <a class="card reveal" data-d="2" href="work.html">
+    <a class="card reveal" data-d="2" href="/work">
       <div class="thumb">
         <canvas class="card-canvas" data-canvas-type="filings-feed" aria-hidden="true"></canvas>
       </div>
@@ -394,10 +394,10 @@
       <div class="footer-cols">
         <div class="footer-col">
           <h5>Site</h5>
-          <a href="index.html">Home</a>
-          <a href="work.html">Work</a>
-          <a href="creative.html">Creative</a>
-          <a href="contact.html">Contact</a>
+          <a href="/">Home</a>
+          <a href="/work">Work</a>
+          <a href="/creative">Creative</a>
+          <a href="/contact">Contact</a>
         </div>
         <div class="footer-col">
           <h5>Elsewhere</h5>
@@ -421,18 +421,11 @@
   <div class="modal-card"><div class="modal-card-inner"></div></div>
 </div>
 
-<!-- page transition overlay -->
-<div class="page-transition" aria-hidden="true">
-  <span class="label">↗ navigating</span>
-</div>
 
-<!-- custom cursor (auto-disabled on touch + reduced-motion) -->
-<div class="cursor-ring" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
 
-<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 <script src="main.js" defer></script>
 </body>
 </html>

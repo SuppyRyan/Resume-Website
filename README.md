@@ -17,10 +17,11 @@ vercel.json     Vercel config — clean URLs + basic security headers
 
 ## Preview locally
 
-- Easiest: just open `index.html` in a browser (double-click it). Everything visual
-  works on `file://` — only the contact form needs a deployed host to submit.
-- With Node.js installed: `node serve.mjs` → http://localhost:3000
-- With Python installed: `python -m http.server 3000` → http://localhost:3000
+Links between pages use Vercel's clean URLs (`/work`, not `work.html`, which would cost a redirect
+on every click), so previewing needs a server that serves `work.html` at `/work`: `npx serve .`
+does this. Opening `index.html` by double-clicking still shows each page, but the nav links won't
+resolve on `file://`. The easiest check is the live site: every push to `main` deploys in under a
+minute.
 
 ## Deploy to Vercel (free)
 

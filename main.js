@@ -1,5 +1,5 @@
 /* Ryan Lin — site behaviour: theme, mobile nav, scroll header, reveals,
-   project modal, gallery lightbox, project filters. Vanilla JS, no deps. */
+   project modal, gallery lightbox, project filters, and the motion layer. */
 (function () {
   "use strict";
   var root = document.documentElement;
@@ -132,8 +132,11 @@
   if (y) y.textContent = new Date().getFullYear();
 
   /* ============================================================
-     MOTION LAYER — Lenis smooth scroll, GSAP, kinetic hero,
-     hero canvas (candle field), custom cursor.
+     MOTION LAYER — GSAP, kinetic hero, hero canvas (candle field).
+     Scrolling and the pointer are the browser's own: a smoothed scroll
+     and a drawn cursor both trail the hand, which reads as lag.
+     Page changes use the native View Transition (styles.css), so a click
+     starts loading the next page immediately.
      All gracefully disabled under prefers-reduced-motion or
      when libraries fail to load (CDN block / offline).
      ============================================================ */
@@ -141,29 +144,10 @@
   var prefersReduced = rmq.matches;
   rmq.addEventListener && rmq.addEventListener("change", function (e) { prefersReduced = e.matches; });
 
-  /* ---------- Lenis smooth scroll + GSAP ticker sync ---------- */
-  var lenis = null;
-  function bootLenis() {
-    if (prefersReduced || !window.Lenis) return;
-    try {
-      lenis = new window.Lenis({
-        duration: 1.1,
-        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-        smoothWheel: true,
-        smoothTouch: false,
-        wheelMultiplier: 1.0,
-        touchMultiplier: 1.5
-      });
-      if (window.gsap && window.ScrollTrigger) {
-        lenis.on("scroll", window.ScrollTrigger.update);
-        window.gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
-        window.gsap.ticker.lagSmoothing(0);
-      } else {
-        var raf = function (time) { lenis.raf(time); requestAnimationFrame(raf); };
-        requestAnimationFrame(raf);
-      }
-    } catch (err) { lenis = null; }
-  }
+  // Canvas colours come from CSS variables. Reading them is a style recalculation, so it
+  // happens once per theme, not once per frame.
+  var themeVersion = 0;
+  new MutationObserver(function () { themeVersion++; }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 
   /* ---------- Kinetic name: split into chars + cursor-driven parallax ---------- */
   function bootKineticName() {
@@ -196,8 +180,10 @@
       });
     });
 
+    // Measured on entry, not on every move: reading layout inside mousemove forces a reflow.
+    var rect = hero.getBoundingClientRect();
+    hero.addEventListener("mouseenter", function () { rect = hero.getBoundingClientRect(); });
     hero.addEventListener("mousemove", function (e) {
-      var rect = hero.getBoundingClientRect();
       var dx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
       var dy = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
       for (var i = 0; i < chars.length; i++) {
@@ -231,11 +217,15 @@
     var rafId = 0;
     var visible = true;
 
+    var rgbCache = null, rgbVersion = -1;
     function accentRGB() {
+      if (rgbVersion === themeVersion) return rgbCache;
       var s = getComputedStyle(document.documentElement);
       var hex = (s.getPropertyValue("--accent") || "#cf924f").trim().replace("#", "");
       if (hex.length === 3) hex = hex.split("").map(function (c) { return c + c; }).join("");
-      return [parseInt(hex.substr(0, 2), 16), parseInt(hex.substr(2, 2), 16), parseInt(hex.substr(4, 2), 16)];
+      rgbCache = [parseInt(hex.substr(0, 2), 16), parseInt(hex.substr(2, 2), 16), parseInt(hex.substr(4, 2), 16)];
+      rgbVersion = themeVersion;
+      return rgbCache;
     }
 
     function seed() {
@@ -312,25 +302,25 @@
       }
     }
 
+    // Off-screen, the loop stops entirely instead of spinning empty frames.
     function tick() {
-      if (!visible) { rafId = requestAnimationFrame(tick); return; }
+      if (!visible) { rafId = 0; return; }
       clock += 16;
       draw();
       rafId = requestAnimationFrame(tick);
     }
+    function start() { if (!rafId) rafId = requestAnimationFrame(tick); }
 
-    // pause when off-screen
     if ("IntersectionObserver" in window) {
-      var hvo = new IntersectionObserver(function (entries) {
+      new IntersectionObserver(function (entries) {
         visible = entries[0].isIntersecting;
-      }, { threshold: 0.01 });
-      hvo.observe(canvas);
+        if (visible) start();
+      }, { threshold: 0.01 }).observe(canvas);
     }
 
     window.addEventListener("resize", resize);
-    // re-seed on theme change so accent recomputes (next frame catches it via getComputedStyle)
     resize();
-    tick();
+    start();
 
     // scroll-scrub: compress candles into sparkline as hero exits
     if (window.gsap && window.ScrollTrigger) {
@@ -345,49 +335,6 @@
         });
       }
     }
-  }
-
-  /* ---------- Custom cursor: dot + trailing ring ---------- */
-  function bootCursor() {
-    if (prefersReduced) return;
-    if (!window.matchMedia("(hover: hover)").matches) return;
-    var dot = document.querySelector(".cursor-dot");
-    var ring = document.querySelector(".cursor-ring");
-    if (!dot || !ring) return;
-
-    document.body.classList.add("has-cursor");
-    var dotX = -100, dotY = -100, ringX = -100, ringY = -100;
-    var tx = -100, ty = -100;
-
-    document.addEventListener("mousemove", function (e) {
-      tx = e.clientX; ty = e.clientY;
-      if (!document.body.classList.contains("cursor-ready")) {
-        document.body.classList.add("cursor-ready");
-        dotX = ringX = tx; dotY = ringY = ty;
-      }
-    }, { passive: true });
-    document.addEventListener("mouseleave", function () { document.body.classList.remove("cursor-ready"); });
-    document.addEventListener("mouseenter", function () { document.body.classList.add("cursor-ready"); });
-    document.addEventListener("mousedown", function () { document.body.classList.add("cursor-press"); });
-    document.addEventListener("mouseup",   function () { document.body.classList.remove("cursor-press"); });
-
-    var hoverSel = 'a, button, .filter, .tag, .chip, .card, [role="button"], input, textarea, label[for]';
-    document.addEventListener("mouseover", function (e) {
-      if (e.target.closest && e.target.closest(hoverSel)) document.body.classList.add("cursor-hover");
-    });
-    document.addEventListener("mouseout", function (e) {
-      if (e.target.closest && e.target.closest(hoverSel)) document.body.classList.remove("cursor-hover");
-    });
-
-    (function loop() {
-      dotX  += (tx - dotX)  * 0.5;
-      dotY  += (ty - dotY)  * 0.5;
-      ringX += (tx - ringX) * 0.16;
-      ringY += (ty - ringY) * 0.16;
-      dot.style.transform  = "translate3d(" + dotX  + "px," + dotY  + "px,0) translate(-50%,-50%)";
-      ring.style.transform = "translate3d(" + ringX + "px," + ringY + "px,0) translate(-50%,-50%)";
-      requestAnimationFrame(loop);
-    })();
   }
 
   /* ---------- About scrollytelling: swap roles as chunks scroll past ---------- */
@@ -449,9 +396,12 @@
     var canvases = document.querySelectorAll(".card-canvas");
     if (!canvases.length) return;
 
+    var accentCache = null, accentVersion = -1;
     function accent() {
+      if (accentVersion === themeVersion) return accentCache;
+      accentVersion = themeVersion;
       var s = getComputedStyle(document.documentElement);
-      return {
+      return accentCache = {
         bright: (s.getPropertyValue("--accent-bright") || "#e7ad6a").trim(),
         base:   (s.getPropertyValue("--accent")        || "#cf924f").trim(),
         deep:   (s.getPropertyValue("--accent-deep")   || "#a96c30").trim(),
@@ -473,17 +423,21 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
       resize();
-      var visible = true;
+      var visible = true, step = null, rafId = 0;
+      // Animates only while on screen; off-screen the loop stops rather than spinning empty frames.
+      function frame() { if (!visible || !step) { rafId = 0; return; } step(); rafId = requestAnimationFrame(frame); }
+      function resume() { if (!rafId && step && !prefersReduced) rafId = requestAnimationFrame(frame); }
       if ("IntersectionObserver" in window) {
         new IntersectionObserver(function (entries) {
           visible = entries[0].isIntersecting;
+          if (visible) resume();
         }, { threshold: 0.01 }).observe(canvas);
       }
       window.addEventListener("resize", resize);
       return {
         ctx: ctx,
         dims: function () { return { w: w, h: h }; },
-        isVisible: function () { return visible; }
+        run: function (fn) { step = fn; resume(); }
       };
     }
 
@@ -585,14 +539,9 @@
         t++;
       }
 
-      function loop() {
-        if (s.isVisible() && !prefersReduced) draw();
-        else if (!s.isVisible()) { /* idle */ }
-        requestAnimationFrame(loop);
-      }
       draw(); // initial frame
       if (prefersReduced) { t = 200; draw(); return; }
-      loop();
+      s.run(draw);
     }
 
     // 2) Filings feed — EDGAR screener card
@@ -661,17 +610,12 @@
         }
       }
 
-      function loop() {
-        if (s.isVisible() && !prefersReduced) {
-          t++;
-          if (t % 110 === 0) activeRow = (activeRow + 1) % rows.length;
-          draw();
-        }
-        requestAnimationFrame(loop);
-      }
       draw();
-      if (prefersReduced) return;
-      loop();
+      s.run(function () {
+        t++;
+        if (t % 110 === 0) activeRow = (activeRow + 1) % rows.length;
+        draw();
+      });
     }
 
     // 3) Stress curves — R modeling card
@@ -724,13 +668,8 @@
         ctx.fillText("// amortization · ±200bps stress", pad, 12);
       }
 
-      function loop() {
-        if (s.isVisible() && !prefersReduced) { t++; draw(); }
-        requestAnimationFrame(loop);
-      }
       draw();
-      if (prefersReduced) return;
-      loop();
+      s.run(function () { t++; draw(); });
     }
 
     // Tickmark: practice questions per exam section, one row lit at a time.
@@ -785,17 +724,12 @@
         }
       }
 
-      function loop() {
-        if (s.isVisible() && !prefersReduced) {
-          t++;
-          if (t % 110 === 0) activeRow = (activeRow + 1) % rows.length;
-          draw();
-        }
-        requestAnimationFrame(loop);
-      }
       draw();
-      if (prefersReduced) return;
-      loop();
+      s.run(function () {
+        t++;
+        if (t % 110 === 0) activeRow = (activeRow + 1) % rows.length;
+        draw();
+      });
     }
 
     canvases.forEach(function (canvas) {
@@ -804,42 +738,6 @@
       else if (type === "filings-feed")   initFilingsFeed(canvas);
       else if (type === "stress-curves")  initStressCurves(canvas);
       else if (type === "question-bank")  initQuestionBank(canvas);
-    });
-  }
-
-  /* ---------- Page transitions (cover sweep on outgoing nav) ---------- */
-  function bootPageTransitions() {
-    if (prefersReduced) return;
-    var overlay = document.querySelector(".page-transition");
-    if (!overlay) return;
-
-    document.addEventListener("click", function (e) {
-      var a = e.target.closest && e.target.closest("a[href]");
-      if (!a) return;
-      var href = a.getAttribute("href");
-      if (!href) return;
-
-      // skip non-page-nav links
-      if (href.charAt(0) === "#") return;
-      if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
-      if (a.hasAttribute("download")) return;
-      if (a.getAttribute("target") === "_blank") return;
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-
-      // external link?
-      try {
-        var url = new URL(href, window.location.href);
-        if (url.origin !== window.location.origin) return;
-      } catch (err) { return; }
-
-      // only intercept .html navigations
-      if (!/\.html(\?.*)?$/i.test(href.split("#")[0])) return;
-      // same-page link? skip
-      if (a.href === window.location.href) return;
-
-      e.preventDefault();
-      overlay.classList.add("is-covering");
-      setTimeout(function () { window.location.href = href; }, 470);
     });
   }
 
@@ -944,14 +842,11 @@
 
   // Boot order — wait briefly so deferred CDN scripts settle, then init.
   function bootMotion() {
-    bootLenis();
     bootKineticName();
     bootHeroCanvas();
-    bootCursor();
     bootAboutScroll();
     bootTimelineScrub();
     bootCardCanvases();
-    bootPageTransitions();
     bootMagneticButtons();
     bootCounters();
   }

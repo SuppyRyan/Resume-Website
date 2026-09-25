@@ -21,14 +21,14 @@
 
 <header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="index.html" aria-label="Ryan Lin — home">
+    <a class="brand" href="/" aria-label="Ryan Lin — home">
       <span class="mark">RL</span><span class="who">Ryan&nbsp;Lin <span>· Finance &amp; Data</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="index.html">Home</a>
-      <a href="work.html">Work</a>
-      <a href="creative.html">Creative</a>
-      <a href="contact.html" class="is-active">Contact</a>
+      <a href="/">Home</a>
+      <a href="/work">Work</a>
+      <a href="/creative">Creative</a>
+      <a href="/contact" class="is-active">Contact</a>
     </nav>
     <div class="nav-right">
       <button class="theme-toggle" aria-label="Switch to light theme" title="Toggle theme">
@@ -44,10 +44,10 @@
 </header>
 
 <div class="mobile-nav" id="mobile-nav">
-  <a href="index.html">Home</a>
-  <a href="work.html">Work</a>
-  <a href="creative.html">Creative</a>
-  <a href="contact.html" class="is-active">Contact</a>
+  <a href="/">Home</a>
+  <a href="/work">Work</a>
+  <a href="/creative">Creative</a>
+  <a href="/contact" class="is-active">Contact</a>
   <a href="assets/Ryan-Lin-Resume.pdf" download>Download résumé ↓</a>
   <div class="m-foot">
     <a href="https://www.linkedin.com/in/rynlin/" target="_blank" rel="noopener">LinkedIn</a>
@@ -58,7 +58,7 @@
 <main>
 
 <section class="page-intro wrap">
-  <span class="crumbs"><a href="index.html">Home</a> &nbsp;/&nbsp; Contact</span>
+  <span class="crumbs"><a href="/">Home</a> &nbsp;/&nbsp; Contact</span>
   <h1>Let's <em class="ser">talk.</em></h1>
   <p class="lede">The fastest way to reach me is email or LinkedIn — both go straight to me, and I read everything. Open to finance &amp; data roles, project collaborations, and brand partnerships.</p>
 </section>
@@ -105,7 +105,7 @@
           </li>
           <li style="display:flex;gap:14px;align-items:flex-start;">
             <span class="chip chip--accent" style="flex:none;">Brands</span>
-            <span style="color:var(--text-dim);font-size:15px;">Content partnerships across fashion, food, and hobby spaces — see the <a href="creative.html" style="color:var(--accent-bright);">Creative page</a>.</span>
+            <span style="color:var(--text-dim);font-size:15px;">Content partnerships across fashion, food, and hobby spaces — see the <a href="/creative" style="color:var(--accent-bright);">Creative page</a>.</span>
           </li>
           <li style="display:flex;gap:14px;align-items:flex-start;">
             <span class="chip chip--accent" style="flex:none;">Hello</span>
@@ -143,7 +143,7 @@
       <div class="footer-cols">
         <div class="footer-col">
           <h5>Site</h5>
-          <a href="index.html">Home</a><a href="work.html">Work</a><a href="creative.html">Creative</a><a href="contact.html">Contact</a>
+          <a href="/">Home</a><a href="/work">Work</a><a href="/creative">Creative</a><a href="/contact">Contact</a>
         </div>
         <div class="footer-col">
           <h5>Elsewhere</h5>
@@ -164,18 +164,11 @@
   <div class="modal-card"><div class="modal-card-inner"></div></div>
 </div>
 
-<!-- page transition overlay -->
-<div class="page-transition" aria-hidden="true">
-  <span class="label">↗ navigating</span>
-</div>
 
-<!-- custom cursor (auto-disabled on touch + reduced-motion) -->
-<div class="cursor-ring" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
 
-<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 <script src="main.js" defer></script>
 </body>
 </html>

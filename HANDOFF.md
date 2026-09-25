@@ -61,5 +61,15 @@ estimated), no pricing for products that are not charging yet.
 
 - 2026-09-25: Cloned to `C:\Users\shaol\Projects\resume-website` (it had only lived on GitHub). Tickmark added: Work page row 01 with a new Products filter, a detail pop-up linking to the live site, and an animated "questions by exam" thumbnail (`initQuestionBank` in main.js, real bank counts); home card 1, replacing Mathematical Modeling for Finance there (still on the Work page). This file created, with the procedure for adding projects. Checked at desktop and phone width: no console errors, no overflow.
 
+- 2026-09-25: Speed and feel (owner: animations lag, clicks feel slow, the mouse feels slow, scrolling into projects is iffy). Removed Lenis smooth scroll (native scrolling; it also made the wheel scroll the page behind an open project pop-up), the drawn cursor (the dot trailed the pointer by 100 px, the ring by 250 px; the real pointer is back) and the 470 ms cover sweep before every page change (replaced by the browser's own View Transition, 0.18 s, while the next page loads). Internal links are clean URLs (`/work`), skipping a 308 redirect per click; pages prerender on hover (speculation rules). Canvas animations stop off-screen and read theme colours once per theme instead of every frame. Reveals 0.8 s → 0.5 s, hero entrance 0.9 s → 0.6 s, pop-up 0.4 s → 0.22 s. Faint text now passes WCAG AA in both themes (dark `#938873`, light `#6f6452`); link underline and footer/menu hovers animate transforms, not width or padding.
+
+## Motion rules (keep it fast)
+
+- Never delay navigation for an animation; page changes use `@view-transition` in `styles.css`.
+- No scroll smoothing and no drawn cursor: both trail the user's hand and read as lag.
+- A canvas animation runs only while on screen (`setupCanvas().run(step)` in `main.js`) and reads
+  CSS variables once per theme (`themeVersion`), never per frame.
+- Entrances finish within about half a second; animate `transform` and `opacity`, not layout.
+
 **Next:** Sidequest once its legal review clears (owner's call). Open items from `README.md`: real
 `og:image`, canonical URL, creative gallery photos.
