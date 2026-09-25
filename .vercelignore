@@ -1,0 +1,3 @@
+# Internal notes stay out of the deployed site (the repo is public; this keeps them off ryan-lin.vercel.app)
+*.md
+.impeccable/
