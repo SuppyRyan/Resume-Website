@@ -312,7 +312,7 @@ html[data-theme="light"] .hero-canvas { opacity: .55; }
   height: 64px;
   background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-bright) 40%, transparent 100%);
   transform-origin: top;
-  animation: cueRun 2.6s var(--ease-out-quart) infinite;
+  animation: cueRun 2.6s var(--ease-out-quart) .8s 3 both;  /* a nudge, then rest: an endless loop costs a frame forever */
 }
 @keyframes cueRun {
   0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
@@ -783,6 +783,8 @@ body.modal-open { overflow: hidden; }
   color: var(--text-dim);
   will-change: transform;
 }
+/* Paused while scrolled out of view (main.js), so it costs nothing until it is seen. */
+.footer-marquee.is-off .footer-marquee-track { animation-play-state: paused; }
 .footer-marquee-track span {
   display: inline-flex;
   align-items: center;

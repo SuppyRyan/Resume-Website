@@ -127,6 +127,13 @@
     openModal(inner);
   });
 
+  /* ---------- footer marquee: runs only while on screen ---------- */
+  var marquee = document.querySelector(".footer-marquee");
+  if (marquee && "IntersectionObserver" in window) {
+    marquee.classList.add("is-off");
+    new IntersectionObserver(function (entries) { marquee.classList.toggle("is-off", !entries[0].isIntersecting); }).observe(marquee);
+  }
+
   /* ---------- footer year ---------- */
   var y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();
@@ -256,16 +263,20 @@
       seed();
     }
 
-    function draw() {
+    // step: how many 16 ms frames of motion this draw covers (2 at the 30 fps cap).
+    function draw(step) {
+      step = step || 1;
       ctx.clearRect(0, 0, w, h);
       var rgb = accentRGB();
       var r = rgb[0], g = rgb[1], b = rgb[2];
+      // One colour string per theme; each candle varies only its opacity.
+      ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
       var compress = scrollProgress;
       var centerY = h * 0.58;
 
       for (var i = 0; i < candles.length; i++) {
         var c = candles[i];
-        c.x -= c.speed * (1 - compress * 0.5);
+        c.x -= c.speed * step * (1 - compress * 0.5);
         if (c.x < -24) c.x = w + 24;
 
         var bob = Math.sin(clock * 0.0009 + c.phase) * 5;
@@ -275,15 +286,16 @@
         var alpha = (0.08 + c.depth * 0.26) * (1 - compress * 0.7);
 
         // body
-        ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + alpha.toFixed(3) + ")";
+        ctx.globalAlpha = alpha;
         ctx.fillRect(c.x, ty - ch / 2, c.width, ch);
         // wicks
-        var wA = (alpha * 0.65).toFixed(3);
-        ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + wA + ")";
+        ctx.globalAlpha = alpha * 0.65;
         var wickLen = c.wick * (1 - compress);
         ctx.fillRect(c.x + c.width / 2 - 0.5, ty - ch / 2 - wickLen, 1, wickLen);
         ctx.fillRect(c.x + c.width / 2 - 0.5, ty + ch / 2,         1, wickLen);
       }
+
+      ctx.globalAlpha = 1;
 
       // sparkline emerging during compression
       if (compress > 0.04) {
@@ -302,12 +314,17 @@
       }
     }
 
-    // Off-screen, the loop stops entirely instead of spinning empty frames.
-    function tick() {
-      if (!visible) { rafId = 0; return; }
-      clock += 16;
-      draw();
+    // Off-screen, the loop stops entirely instead of spinning empty frames. On screen it draws at
+    // 30 fps: the drift is slow enough that 60 looks no different and costs twice the CPU.
+    var lastDraw = 0;
+    function tick(now) {
+      if (!visible) { rafId = 0; lastDraw = 0; return; }
       rafId = requestAnimationFrame(tick);
+      if (lastDraw && now - lastDraw < 30) return;
+      var elapsed = lastDraw ? Math.min(now - lastDraw, 100) : 16;
+      lastDraw = now;
+      clock += elapsed;
+      draw(elapsed / 16);
     }
     function start() { if (!rafId) rafId = requestAnimationFrame(tick); }
 
