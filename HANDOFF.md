@@ -78,5 +78,7 @@ estimated), no pricing for products that are not charging yet.
 - No endless animation runs off screen: canvases stop, the marquee pauses (`is-off`), loops that
   only decorate (the scroll cue) play a few times and rest.
 
-**Next:** after the Vercel limit resets (from about 19:05 UTC on 26 Sep 2026), push any commit and confirm https://ryan-lin.vercel.app/HANDOFF.md returns 404. Then the critique's priorities (owner decisions pending): invented chart numbers, Tickmark buried, home page length, audit-workpaper identity. Sidequest once its legal review clears (owner's call). Open items from `README.md`: real
+**Deploying while over the Vercel limit:** the scheduled task "Portfolio deploy when ready" (hourly, `tools/deploy-when-ready.mjs`, log in `tools/deploy-log.txt`) runs `vercel deploy --prod` until the live site matches this folder and HANDOFF.md is gone, then deletes itself. Set up 25 Sep because Vercel does not retry a Git push it rate-limited.
+
+**Next:** confirm the task deployed (https://ryan-lin.vercel.app/HANDOFF.md returns 404, the Work page has no filter bar) and has removed itself. Then the critique's priorities (owner decisions pending): invented chart numbers, Tickmark buried, home page length, audit-workpaper identity. Sidequest once its legal review clears (owner's call). Open items from `README.md`: real
 `og:image`, canonical URL, creative gallery photos.
