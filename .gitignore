@@ -1,2 +1,6 @@
 # Design-critique snapshots: working notes, not for a public repo
 .impeccable/
+
+.vercel
+.env*
+.vercel/
