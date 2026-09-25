@@ -733,11 +733,77 @@
       loop();
     }
 
+    // Tickmark: practice questions per exam section, one row lit at a time.
+    function initQuestionBank(canvas) {
+      var s = setupCanvas(canvas); if (!s) return;
+      var rows = [
+        { code: "FAR", n: 4988 }, { code: "CFA L1", n: 1024 }, { code: "CAPM", n: 1004 },
+        { code: "SIE", n: 806 }, { code: "TCP", n: 567 }, { code: "AUD", n: 504 }
+      ];
+      var max = 4988, t = 0, activeRow = 0;
+
+      function draw() {
+        var d = s.dims(); var w = d.w, h = d.h;
+        var ctx = s.ctx;
+        ctx.clearRect(0, 0, w, h);
+        var c = accent();
+        var pad = 14;
+
+        ctx.font = "10px 'Space Mono', monospace";
+        ctx.fillStyle = c.dim;
+        ctx.textBaseline = "top";
+        ctx.fillText("// tickmark · questions by exam", pad, 12);
+
+        var rowsTop = 36;
+        var rowH = (h - rowsTop - pad) / rows.length;
+        for (var i = 0; i < rows.length; i++) {
+          var r = rows[i];
+          var y = rowsTop + i * rowH + rowH / 2;
+          if (i === activeRow) {
+            ctx.fillStyle = "rgba(207,146,79,.10)";
+            ctx.fillRect(pad - 6, rowsTop + i * rowH + 2, w - (pad - 6) * 2, rowH - 4);
+          }
+          ctx.textBaseline = "middle";
+          ctx.font = "bold 11px 'Space Mono', monospace";
+          ctx.fillStyle = (i === activeRow) ? c.bright : c.text;
+          ctx.fillText(r.code, pad, y);
+
+          // square-root scale so the smaller banks still read next to FAR
+          var barX = pad + 62;
+          var barW = w - barX - pad - 48;
+          ctx.fillStyle = "rgba(150,135,110,.20)";
+          ctx.fillRect(barX, y - 1.5, barW, 3);
+          ctx.fillStyle = (i === activeRow) ? c.bright : c.base;
+          ctx.fillRect(barX, y - 1.5, barW * Math.sqrt(r.n / max), 3);
+
+          ctx.font = "10px 'Space Mono', monospace";
+          ctx.fillStyle = c.dim;
+          ctx.textAlign = "right";
+          ctx.fillText(r.n.toLocaleString("en-US"), w - pad, y);
+          ctx.textAlign = "left";
+          ctx.textBaseline = "top";
+        }
+      }
+
+      function loop() {
+        if (s.isVisible() && !prefersReduced) {
+          t++;
+          if (t % 110 === 0) activeRow = (activeRow + 1) % rows.length;
+          draw();
+        }
+        requestAnimationFrame(loop);
+      }
+      draw();
+      if (prefersReduced) return;
+      loop();
+    }
+
     canvases.forEach(function (canvas) {
       var type = canvas.getAttribute("data-canvas-type");
       if (type === "equity-curve")   initEquityCurve(canvas);
       else if (type === "filings-feed")   initFilingsFeed(canvas);
       else if (type === "stress-curves")  initStressCurves(canvas);
+      else if (type === "question-bank")  initQuestionBank(canvas);
     });
   }
 
