@@ -8,7 +8,9 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Work — Ryan Lin" />
 <meta property="og:description" content="Finance & data projects: Tickmark exam prep, automated trading, SEC NLP screener, quantitative modeling." />
-<meta property="og:image" content="https://placehold.co/1200x630/0c0a08/cf924f.png?text=Ryan+Lin+%E2%80%94+Work" />
+<meta property="og:image" content="https://ryan-lin.vercel.app/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%230c0a08'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Georgia,serif'%20font-size='40'%20fill='%23cf924f'%20text-anchor='middle'%20font-weight='600'%3ER%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -65,21 +67,14 @@
 </section>
 
 <section class="section wrap section--tight">
-  <div class="filters" role="group" aria-label="Filter projects">
-    <button class="filter" data-filter="all" aria-pressed="true">All</button>
-    <button class="filter" data-filter="product" aria-pressed="false">Products</button>
-    <button class="filter" data-filter="quant" aria-pressed="false">Quant &amp; Automation</button>
-    <button class="filter" data-filter="data" aria-pressed="false">Data &amp; NLP</button>
-    <button class="filter" data-filter="modeling" aria-pressed="false">Modeling</button>
-  </div>
-
+  <h2 class="sr-only">Projects</h2>
   <div class="work-list">
 
-    <button class="work-row reveal" data-cats="product" data-modal="m-tickmark" aria-haspopup="dialog">
+    <button class="work-row reveal" id="tickmark" data-cats="product" data-modal="m-tickmark" aria-haspopup="dialog">
       <span class="work-num">01</span>
       <div class="work-row-info">
         <span class="work-row-kicker">Product · EdTech <span class="yr">2026 — Present</span></span>
-        <h3 class="work-row-title">Tickmark — Business Career Prep</h3>
+        <span class="work-row-title">Tickmark — Business Career Prep</span>
         <p class="work-row-desc">A live study platform for CPA, CFA, SIE and CAPM exams and finance interviews: 11,000+ practice questions with every answer choice explained, real-format timed exams, and a team of scheduled AI agents that write, fact-check and audit the content.</p>
         <div class="work-row-stack"><span>JavaScript</span><span>Node.js</span><span>Vercel</span><span>Claude agents</span></div>
       </div>
@@ -91,11 +86,11 @@
       </span>
     </button>
 
-    <button class="work-row reveal" data-d="1" data-cats="quant" data-modal="m-algo" aria-haspopup="dialog">
+    <button class="work-row reveal" id="trading-bot" data-d="1" data-cats="quant" data-modal="m-algo" aria-haspopup="dialog">
       <span class="work-num">02</span>
       <div class="work-row-info">
         <span class="work-row-kicker">Quant · Automation <span class="yr">2026 — Present</span></span>
-        <h3 class="work-row-title">Algorithmic Trading System</h3>
+        <span class="work-row-title">Algorithmic Trading System</span>
         <p class="work-row-desc">End-to-end automated equity-trading bot on the Alpaca paper API — premarket scanning, rule-based execution on a simulated $100K book, and a read-only P&amp;L dashboard.</p>
         <div class="work-row-stack"><span>Python 3.12</span><span>alpaca-py</span><span>FastAPI</span><span>pandas</span></div>
       </div>
@@ -107,11 +102,11 @@
       </span>
     </button>
 
-    <button class="work-row reveal" data-d="2" data-cats="data" data-modal="m-sec" aria-haspopup="dialog">
+    <button class="work-row reveal" id="sec-screener" data-d="2" data-cats="data" data-modal="m-sec" aria-haspopup="dialog">
       <span class="work-num">03</span>
       <div class="work-row-info">
         <span class="work-row-kicker">Data · NLP <span class="yr">2025 — 2026</span></span>
-        <h3 class="work-row-title">SEC Earnings Sentiment &amp; Fundamental Screener</h3>
+        <span class="work-row-title">SEC Earnings Sentiment &amp; Fundamental Screener</span>
         <p class="work-row-desc">Pipeline ingesting 10-K / 10-Q filings from SEC EDGAR, scoring MD&amp;A and risk-factor language quarter-over-quarter, and blending sentiment with valuation metrics into a stock screener.</p>
         <div class="work-row-stack"><span>Python</span><span>SEC EDGAR API</span><span>NLP</span><span>pandas</span></div>
       </div>
@@ -123,11 +118,11 @@
       </span>
     </button>
 
-    <button class="work-row reveal" data-d="3" data-cats="modeling" data-modal="m-math" aria-haspopup="dialog">
+    <button class="work-row reveal" id="finance-modeling" data-d="3" data-cats="modeling" data-modal="m-math" aria-haspopup="dialog">
       <span class="work-num">04</span>
       <div class="work-row-info">
         <span class="work-row-kicker">Modeling · R <span class="yr">2023</span></span>
-        <h3 class="work-row-title">Mathematical Modeling for Finance</h3>
+        <span class="work-row-title">Mathematical Modeling for Finance</span>
         <p class="work-row-desc">Amortization and savings-growth models in R simulating variable-rate mortgage scenarios, with regression forecasting and ±200bps interest-rate stress tests on borrower outcomes.</p>
         <div class="work-row-stack"><span>R Studio</span><span>Excel</span><span>Regression</span><span>Stress Testing</span></div>
       </div>
@@ -143,7 +138,7 @@
       <span class="work-num">+</span>
       <div class="work-row-info">
         <span class="work-row-kicker">In the works <span class="yr">2026</span></span>
-        <h3 class="work-row-title">More projects in progress</h3>
+        <span class="work-row-title">More projects in progress</span>
         <p class="work-row-desc">Backtesting framework, options-flow analytics, and a personal-finance data warehouse are next on the bench. Want the early look?</p>
       </div>
       <div class="work-row-thumb"></div>
@@ -173,6 +168,7 @@
     <p class="kicker">Product · EdTech — 2026 → Present</p>
     <h2>Tickmark — Business Career Prep</h2>
     <p>A study platform I built and run for the exams and interviews that open business careers. It started as a replacement for the paid CPA review course I was using, and grew into a career hub: explore six business paths, then prepare for the credential or interview each one needs.</p>
+    <p><a class="btn btn--ghost" href="https://tickmark-pink.vercel.app" target="_blank" rel="noopener">Visit Tickmark ↗</a></p>
     <ul class="m-list">
       <li><b>11,000+ original practice questions</b> across 14 exam sections (all six CPA sections, CFA Level I, SIE, CAPM, and investment banking, consulting, PE, quant and VC interviews), with every answer choice explained.</li>
       <li><b>Real-format timed exams</b>, 100 CPA task-based simulations, 21 interview cases, and a full lesson with worked examples for every topic.</li>
@@ -180,7 +176,6 @@
       <li>Spaced review of missed questions, a readiness estimate, and career outlooks built on BLS pay and hours data.</li>
     </ul>
     <div class="m-stack"><span>JavaScript</span><span>Node.js</span><span>Vercel</span><span>Supabase</span><span>Stripe</span><span>Claude API</span><span>Playwright</span><span>Task Scheduler</span></div>
-    <p style="margin-top:22px"><a class="btn btn--ghost" href="https://tickmark-pink.vercel.app" target="_blank" rel="noopener">Visit Tickmark ↗</a></p>
   </div>
 </template>
 
@@ -279,11 +274,11 @@
       </div>
       <div class="footer-cols">
         <div class="footer-col">
-          <h5>Site</h5>
+          <h2 class="footer-h">Site</h2>
           <a href="/">Home</a><a href="/work">Work</a><a href="/creative">Creative</a><a href="/contact">Contact</a>
         </div>
         <div class="footer-col">
-          <h5>Elsewhere</h5>
+          <h2 class="footer-h">Elsewhere</h2>
           <a href="https://www.linkedin.com/in/rynlin/" target="_blank" rel="noopener">LinkedIn ↗</a>
           <a href="mailto:ryanlinbusinesses@gmail.com">Email</a>
           <a href="assets/Ryan-Lin-Resume.pdf" download>Résumé (PDF)</a>

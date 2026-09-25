@@ -82,13 +82,37 @@
     document.body.classList.remove("modal-open");
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
+  // Projects are linkable (/work#tickmark) and live in history: Back closes an open project instead of
+  // leaving the page. A project opened by the page (from a link) closes by dropping the hash.
+  function isOpen() { return modal && modal.classList.contains("open"); }
+  function requestClose() {
+    if (!isOpen()) return;
+    if (history.state && history.state.project) history.back();
+    else { closeModal(); if (location.hash) history.replaceState(null, "", location.pathname + location.search); }
+  }
+  function openProject(row, push) {
+    var tpl = document.getElementById(row.getAttribute("data-modal"));
+    if (!tpl) return;
+    openModal(tpl.innerHTML);
+    lastFocus = row;
+    if (push && row.id) history.pushState({ project: row.id }, "", "#" + row.id);
+  }
+  window.addEventListener("popstate", function () {
+    var id = history.state && history.state.project;
+    if (!id && isOpen()) closeModal();
+    else if (id && !isOpen()) { var row = document.getElementById(id); if (row) openProject(row, false); }
+  });
+  if (location.hash.length > 1) {
+    var linked = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (linked && linked.hasAttribute("data-modal")) { linked.scrollIntoView({ block: "center" }); openProject(linked, false); }
+  }
   if (modal) {
     modal.addEventListener("click", function (e) {
-      if (e.target.closest(".modal-close") || e.target.classList.contains("modal-backdrop")) closeModal();
+      if (e.target.closest(".modal-close") || e.target.classList.contains("modal-backdrop")) requestClose();
     });
   }
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { if (modal && modal.classList.contains("open")) closeModal(); else if (document.body.classList.contains("nav-open")) closeNav(); }
+    if (e.key === "Escape") { if (isOpen()) requestClose(); else if (document.body.classList.contains("nav-open")) closeNav(); }
     if (e.key === "Tab" && modal && modal.classList.contains("open")) {
       var f = modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
       if (!f.length) return;
@@ -103,8 +127,7 @@
     var trg = e.target.closest("[data-modal]");
     if (!trg) return;
     e.preventDefault();
-    var tpl = document.getElementById(trg.getAttribute("data-modal"));
-    if (tpl) openModal(tpl.innerHTML);
+    openProject(trg, true);
   });
 
   // gallery lightbox: data-lightbox holds an image src (or it's a styled placeholder div)
@@ -163,10 +186,15 @@
     nodes.forEach(function (node) {
       var txt = node.textContent;
       node.textContent = "";
+      var said = document.createElement("span");
+      said.className = "sr-only";
+      said.textContent = txt;
+      node.appendChild(said);
       for (var i = 0; i < txt.length; i++) {
         var c = txt.charAt(i);
         var sp = document.createElement("span");
         sp.className = "ch" + (c === " " ? " sp" : "");
+        sp.setAttribute("aria-hidden", "true");
         sp.textContent = (c === " " ? " " : c);
         node.appendChild(sp);
       }
@@ -464,12 +492,16 @@
       var points = [];
       var t = 0;
 
+      // Fixed seed: an illustrative curve that is identical on every load (a random one read as a
+      // result that changed each time the page was reloaded).
+      var seed = 20240701;
+      function rand() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
       function generate() {
         points = [];
         var n = 90;
         var price = 100;
         for (var i = 0; i < n; i++) {
-          var noise = (Math.random() - 0.46) * 1.6;
+          var noise = (rand() - 0.46) * 1.6;
           var trend = 0.16;
           price = price + noise + trend;
           if (i > 30 && i < 40) price -= 0.5; // small drawdown
@@ -493,7 +525,7 @@
         var pad = 14;
 
         function px(i) { return pad + (i / (points.length - 1)) * (w - pad * 2); }
-        function py(v) { return h - pad - ((v - min) / range) * (h - pad * 2); }
+        function py(v) { return h - pad - ((v - min) / range) * (h - pad - 34); }  // top 34 px kept for the labels
 
         ctx.strokeStyle = "rgba(150,135,110,.16)";
         ctx.lineWidth = 1;
@@ -546,7 +578,7 @@
         ctx.font = "10px 'Space Mono', monospace";
         ctx.fillStyle = c.dim;
         ctx.textBaseline = "top";
-        ctx.fillText("equity · paper $100k", 14, 12);
+        ctx.fillText("equity · illustrative", 14, 12);
         ctx.textAlign = "right";
         ctx.fillStyle = c.base;
         var endVal = points[lastVis - 1] || points[0];
@@ -584,7 +616,7 @@
         ctx.font = "10px 'Space Mono', monospace";
         ctx.fillStyle = c.dim;
         ctx.textBaseline = "top";
-        ctx.fillText("// edgar feed · sentiment Δ", pad, 12);
+        ctx.fillText("// edgar feed · illustrative", pad, 12);
 
         // rows
         var rowsTop = 36;

@@ -35,19 +35,20 @@ live (or reaches a milestone worth updating). The owner is only asked when a pro
 document says its launch is held for a reason that a public link would undercut (as with Sidequest).
 
 1. **Work page (`work.html`)**, three pieces, copied from an existing project:
-   - a `<button class="work-row reveal" data-cats="…" data-modal="m-…">` row in `.work-list`,
-     numbered in order (newest or most important first; renumber `work-num` and the `data-d`
-     stagger 1–4 below it);
+   - a `<button class="work-row reveal" id="…" data-modal="m-…">` row in `.work-list`, numbered
+     in order (renumber `work-num` and the `data-d` stagger 1–4 below it). The `id` is the project's
+     link: `/work#id` opens its pop-up, and Back closes it. The title is a `<span class="work-row-title">`
+     (no headings inside a button);
    - a `<template id="m-…">` pop-up with the kicker, a few `m-list` bullets of real, checkable facts
      from the project's status document, the `m-stack`, and a `Visit … ↗` button if it is live;
-   - a filter button if no existing `data-filter` fits (`product`, `quant`, `data`, `modeling`).
 2. **Thumbnail**: a `<canvas class="card-canvas" data-canvas-type="…">` drawn by an `init…`
    function in `main.js` (see `initQuestionBank` for the pattern: a `// label` header, rows or a
    curve in the accent colours, one element highlighted on a loop, a static frame under reduced
-   motion). Use the project's real numbers.
+   motion). Numbers on a thumbnail are the project's real ones, or the chart says "illustrative"
+   in its label and holds still (a fixed seed, never `Math.random`).
 3. **Home page (`index.html`)**: `#featured .cards` holds exactly three cards (the grid is three
-   across; a fourth leaves a gap). Put a new flagship project first and drop the oldest card, which
-   stays on the Work page.
+   across; a fourth leaves a gap). Each card links to `/work#<id>`. The site leads with the résumé;
+   projects sit beside it, none singled out in the hero (owner, 25 Sep).
 4. **Meta**: add it to `work.html`'s `description` / `og:description` and the intro `lede`.
 5. **Check**: render both pages at 1400 px and 390 px (Playwright + Chrome, as Tickmark's
    `tools/e2e` does), open the pop-up, and confirm no console errors and no sideways scroll.
@@ -64,6 +65,7 @@ estimated), no pricing for products that are not charging yet.
 - 2026-09-25: Speed and feel (owner: animations lag, clicks feel slow, the mouse feels slow, scrolling into projects is iffy). Removed Lenis smooth scroll (native scrolling; it also made the wheel scroll the page behind an open project pop-up), the drawn cursor (the dot trailed the pointer by 100 px, the ring by 250 px; the real pointer is back) and the 470 ms cover sweep before every page change (replaced by the browser's own View Transition, 0.18 s, while the next page loads). Internal links are clean URLs (`/work`), skipping a 308 redirect per click; pages prerender on hover (speculation rules). Canvas animations stop off-screen and read theme colours once per theme instead of every frame. Reveals 0.8 s → 0.5 s, hero entrance 0.9 s → 0.6 s, pop-up 0.4 s → 0.22 s. Faint text now passes WCAG AA in both themes (dark `#938873`, light `#6f6452`); link underline and footer/menu hovers animate transforms, not width or padding.
 - 2026-09-25: Idle cost halved (home page at rest, CPU slowed 4×: about 77% → 39%). The hero candle field draws at 30 fps with one colour per theme and per-candle opacity (its script time fell from ~30% to 3%); the footer marquee pauses while off screen; the scroll cue plays three times, then rests. Live, before → after: click to the Work page 3.06 s → 1.36 s, wheel settles 1.0 s → 0.14 s, dropped frames while moving the mouse 11 → 1, project pop-up 1.04 s → 0.67 s and it now scrolls itself instead of the page.
 - 2026-09-25: Phone gutters fixed: `.section` used the `padding` shorthand, which zeroed `.wrap`'s side gutters, so text ran edge to edge on every phone and sat 28 px off the header on desktop (now `padding-block`; checked at 390, 1024 and 1400 px on all four pages). The header tag "· Finance & Data" hides below 440 px so the name stays on one line. Impeccable critique run (dual-agent): 22/36; report in `.impeccable/critique/`.
+- 2026-09-25: Clean-up (owner: keep the look, résumé first, projects beside it, tighten Home and Creative, make it seamless). Charts: the trading and SEC thumbnails say "illustrative" and the equity curve holds still (fixed seed; it used to show a different random return on every load). Stats render their real values without JavaScript; "Revenue audited" became "Client revenue scale", "Above benchmark" became "Student fund vs. benchmark". About drops the facts the hero already states and lists Tickmark among the projects. Projects are linkable (`/work#tickmark`, `#trading-bot`, `#sec-screener`, `#finance-modeling`), home cards open their own project, Back closes a pop-up; the Work filter bar is gone (5 filters for 4 projects). Creative: 10 pillars grouped into 5, placeholder tiles labelled and no longer open an empty lightbox, filter bar is a group, not a tablist. Accessibility: headings never skip a level (footer and skills labels were h4/h5), no headings inside buttons, the animated name is read as "Ryan Lin", tap targets 44 px on phones (theme, menu, filters, footer, breadcrumbs), no label under 11 px. Link previews use a real image (`assets/og.png`, 1200×630) instead of a placehold.co placeholder. Duplicate Vercel project `resume-website` deleted (owner OK): each push now deploys once, to ryan-lin.
 - 2026-09-25: The repo is public and Vercel served every file, so `HANDOFF.md` was readable at ryan-lin.vercel.app/HANDOFF.md. `.vercelignore` now keeps `*.md` and `.impeccable/` off the site; `.impeccable/` is also gitignored (critique notes are not for a public repo). Deployed on resume-website-nu-one.vercel.app (HANDOFF.md → 404). **ryan-lin.vercel.app did not redeploy: Vercel returned "Deployment rate limited — retry in 24 hours"** (Hobby plan daily limit; every push here deploys twice, once per Vercel project). A failed deploy does not retry by itself: the next push after the limit resets carries it.
 
 ## Motion rules (keep it fast)

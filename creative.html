@@ -8,7 +8,9 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Creative — Ryan Lin" />
 <meta property="og:description" content="A creative & content space — fashion, food, hobbies, lifestyle. Open to brand collaborations." />
-<meta property="og:image" content="https://placehold.co/1200x630/0c0a08/cf924f.png?text=Ryan+Lin+%E2%80%94+Creative" />
+<meta property="og:image" content="https://ryan-lin.vercel.app/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%230c0a08'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Georgia,serif'%20font-size='40'%20fill='%23cf924f'%20text-anchor='middle'%20font-weight='600'%3ER%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -74,17 +76,13 @@
     <h2 id="pillars-h">What I'll be making.</h2>
     <p class="muted" style="font-size:14.5px;">Tap any pillar to filter the gallery below.</p>
   </div>
-  <div class="filters" role="tablist" aria-label="Filter gallery by content pillar">
+  <div class="filters" role="group" aria-label="Filter gallery by content pillar">
     <button class="filter" data-filter="all" aria-pressed="true">All</button>
     <button class="filter" data-filter="fashion" aria-pressed="false">Fashion &amp; fits</button>
-    <button class="filter" data-filter="food" aria-pressed="false">Food &amp; cooking</button>
-    <button class="filter" data-filter="anime" aria-pressed="false">Anime &amp; manga</button>
-    <button class="filter" data-filter="models" aria-pressed="false">Plastic model kits</button>
-    <button class="filter" data-filter="lego" aria-pressed="false">Lego builds</button>
-    <button class="filter" data-filter="sports" aria-pressed="false">Basketball &amp; volleyball</button>
-    <button class="filter" data-filter="travel" aria-pressed="false">Travel</button>
-    <button class="filter" data-filter="lifting" aria-pressed="false">Weightlifting</button>
-    <button class="filter" data-filter="kdrama" aria-pressed="false">K-drama picks</button>
+    <button class="filter" data-filter="food" aria-pressed="false">Food &amp; travel</button>
+    <button class="filter" data-filter="builds" aria-pressed="false">Lego &amp; model kits</button>
+    <button class="filter" data-filter="screen" aria-pressed="false">Anime &amp; K-drama</button>
+    <button class="filter" data-filter="sport" aria-pressed="false">Courts &amp; lifting</button>
   </div>
 </section>
 
@@ -93,46 +91,46 @@
   <div class="section-head reveal" style="margin-bottom:28px;">
     <span class="eyebrow">Gallery — Preview</span>
     <h2 id="gal-h">Format preview.</h2>
-    <p class="muted" style="font-size:14.5px;">Placeholder tiles — click any to see the lightbox view. Swap-ready for real media.</p>
+    <p class="muted" style="font-size:14.5px;">Placeholders for now: real photos and posts replace these tiles as I publish.</p>
   </div>
 
   <div class="gallery reveal">
-    <button class="tile" data-cats="fashion" data-lightbox="#" data-caption="Fashion — editorial fit, autumn palette">
+    <div class="tile tile--ph" data-cats="fashion" title="Fashion — editorial fit, autumn palette">
       <div class="ph" style="height:320px;background:linear-gradient(150deg,#241a10,#a96c30 70%,#e7ad6a);"></div>
       <span class="ov"><span>Fashion · Editorial</span></span>
-    </button>
-    <button class="tile" data-cats="food" data-lightbox="#" data-caption="Food — slow-cooked, plated">
+    </div>
+    <div class="tile tile--ph" data-cats="food" title="Food — slow-cooked, plated">
       <div class="ph" style="height:240px;background:radial-gradient(circle at 28% 22%,#e7ad6a,#a96c30 55%,#2a1f12);"></div>
       <span class="ov"><span>Food · Cooking</span></span>
-    </button>
-    <button class="tile" data-cats="models" data-lightbox="#" data-caption="Plastic model kit — panel-line build">
+    </div>
+    <div class="tile tile--ph" data-cats="builds" title="Plastic model kit — panel-line build">
       <div class="ph" style="height:300px;background:linear-gradient(135deg,#14110a,#7a4a22 60%,#caa15f);"></div>
       <span class="ov"><span>Model Kits</span></span>
-    </button>
-    <button class="tile" data-cats="travel" data-lightbox="#" data-caption="Travel — golden hour, somewhere new">
+    </div>
+    <div class="tile tile--ph" data-cats="food" title="Travel — golden hour, somewhere new">
       <div class="ph" style="height:360px;background:linear-gradient(120deg,#3a2a18,#cf924f 110%);"></div>
       <span class="ov"><span>Travel</span></span>
-    </button>
-    <button class="tile" data-cats="sports" data-lightbox="#" data-caption="Basketball — court, late session">
+    </div>
+    <div class="tile tile--ph" data-cats="sport" title="Basketball — court, late session">
       <div class="ph" style="height:250px;background:linear-gradient(160deg,#2a1f12,#a4602c 70%,#bd7838);"></div>
       <span class="ov"><span>Basketball</span></span>
-    </button>
-    <button class="tile" data-cats="lego" data-lightbox="#" data-caption="Lego — finished display build">
+    </div>
+    <div class="tile tile--ph" data-cats="builds" title="Lego — finished display build">
       <div class="ph" style="height:300px;background:radial-gradient(circle at 70% 30%,#e7ad6a,#844c1f 60%,#1c170f);"></div>
       <span class="ov"><span>Lego Builds</span></span>
-    </button>
-    <button class="tile" data-cats="lifting" data-lightbox="#" data-caption="Weightlifting — progress log">
+    </div>
+    <div class="tile tile--ph" data-cats="sport" title="Weightlifting — progress log">
       <div class="ph" style="height:230px;background:linear-gradient(135deg,#1c170f,#7a4a22);"></div>
       <span class="ov"><span>Lifting</span></span>
-    </button>
-    <button class="tile" data-cats="anime" data-lightbox="#" data-caption="Anime &amp; manga — shelf + recommendations">
+    </div>
+    <div class="tile tile--ph" data-cats="screen" title="Anime &amp; manga — shelf + recommendations">
       <div class="ph" style="height:340px;background:linear-gradient(150deg,#241a10,#bd7838 80%,#f0d9b0);"></div>
       <span class="ov"><span>Anime · Manga</span></span>
-    </button>
-    <button class="tile" data-cats="kdrama" data-lightbox="#" data-caption="K-drama — what I'm watching">
+    </div>
+    <div class="tile tile--ph" data-cats="screen" title="K-drama — what I'm watching">
       <div class="ph" style="height:260px;background:linear-gradient(120deg,#2a1f12,#a96c30);"></div>
       <span class="ov"><span>K-drama</span></span>
-    </button>
+    </div>
   </div>
 </section>
 
@@ -174,11 +172,11 @@
       </div>
       <div class="footer-cols">
         <div class="footer-col">
-          <h5>Site</h5>
+          <h2 class="footer-h">Site</h2>
           <a href="/">Home</a><a href="/work">Work</a><a href="/creative">Creative</a><a href="/contact">Contact</a>
         </div>
         <div class="footer-col">
-          <h5>Elsewhere</h5>
+          <h2 class="footer-h">Elsewhere</h2>
           <a href="https://www.linkedin.com/in/rynlin/" target="_blank" rel="noopener">LinkedIn ↗</a>
           <a href="mailto:ryanlinbusinesses@gmail.com">Email</a>
           <a href="assets/Ryan-Lin-Resume.pdf" download>Résumé (PDF)</a>
