@@ -25,6 +25,7 @@ Projects in `../PROJECTS.md` that are **not** on the site, and why:
 | eastbay-childcare | Validation phase: no product, no name. | It has a name and something to show. |
 | cpa-reference | Internal data pipeline behind Tickmark, not a product. | Folded into the Tickmark entry if ever mentioned. |
 | executive-assistant | Private personal-admin setup. | Never (private by nature). |
+| workspace | Internal tooling (Obsidian sync, backups). | Never. |
 
 ## Adding a project to the site
 
