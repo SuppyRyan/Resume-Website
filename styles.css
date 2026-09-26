@@ -271,22 +271,8 @@ body.nav-open { overflow: hidden; }
 html[data-theme="light"] .hero-canvas { opacity: .55; }
 
 .hero-grid { display: grid; grid-template-columns: 1.55fr .9fr; gap: clamp(28px, 5vw, 64px); align-items: end; }
-.hero-name {
-  margin: 22px 0 20px;
-  perspective: 900px;
-  perspective-origin: 50% 45%;
-}
-.hero-name .kinetic {
-  display: inline-block;
-  transform-style: preserve-3d;
-}
-.hero-name .kinetic .ch {
-  display: inline-block;
-  will-change: transform;
-  transform-origin: 50% 60%;
-  backface-visibility: hidden;
-}
-.hero-name .kinetic .ch.sp { width: .22em; }
+.hero-name { margin: 22px 0 20px; }
+.hero-name .kinetic { display: inline-block; }
 .hero-name .ln2 { display: block; color: var(--text-faint); }
 
 /* scroll cue (signature element) */
@@ -475,7 +461,7 @@ html[data-theme="light"] .hero-stamp {
 }
 .timeline-rail-fill {
   width: 100%;
-  height: 0%;
+  height: 100%;
   background: linear-gradient(to bottom,
     color-mix(in oklab, var(--accent) 50%, transparent) 0%,
     var(--accent) 22%,
@@ -483,6 +469,16 @@ html[data-theme="light"] .hero-stamp {
   transform-origin: top;
   box-shadow: 0 0 10px color-mix(in oklab, var(--accent) 50%, transparent);
 }
+/* The rail fills as the timeline scrolls past: from its top 78% down the viewport until its bottom is
+   62% down (entry 22% / exit 38% of its view timeline). Without scroll timelines, or with reduced
+   motion, the rail is simply full. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline { view-timeline: --timeline block; }
+    .timeline-rail-fill { animation: rail-fill linear both; animation-timeline: --timeline; animation-range: entry 22% exit 38%; }
+  }
+}
+@keyframes rail-fill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @media (max-width: 720px){ .timeline-rail { display: none; } }
 
 .xp {

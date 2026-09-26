@@ -162,13 +162,14 @@
   if (y) y.textContent = new Date().getFullYear();
 
   /* ============================================================
-     MOTION LAYER — GSAP, kinetic hero, hero canvas (candle field).
-     Scrolling and the pointer are the browser's own: a smoothed scroll
-     and a drawn cursor both trail the hand, which reads as lag.
+     MOTION LAYER: hero canvas (candle field), About roles, card canvases.
+     No animation library. Scrolling and the pointer are the browser's own:
+     a smoothed scroll, a drawn cursor, magnetic buttons and letters that
+     chase the mouse all trail the hand, which reads as lag. The timeline
+     rail is a CSS scroll-driven animation (styles.css).
      Page changes use the native View Transition (styles.css), so a click
      starts loading the next page immediately.
-     All gracefully disabled under prefers-reduced-motion or
-     when libraries fail to load (CDN block / offline).
+     All disabled under prefers-reduced-motion.
      ============================================================ */
   var rmq = window.matchMedia("(prefers-reduced-motion: reduce)");
   var prefersReduced = rmq.matches;
@@ -178,63 +179,6 @@
   // happens once per theme, not once per frame.
   var themeVersion = 0;
   new MutationObserver(function () { themeVersion++; }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-
-  /* ---------- Kinetic name: split into chars + cursor-driven parallax ---------- */
-  function bootKineticName() {
-    var nodes = document.querySelectorAll("[data-kinetic]");
-    if (!nodes.length) return;
-    nodes.forEach(function (node) {
-      var txt = node.textContent;
-      node.textContent = "";
-      var said = document.createElement("span");
-      said.className = "sr-only";
-      said.textContent = txt;
-      node.appendChild(said);
-      for (var i = 0; i < txt.length; i++) {
-        var c = txt.charAt(i);
-        var sp = document.createElement("span");
-        sp.className = "ch" + (c === " " ? " sp" : "");
-        sp.setAttribute("aria-hidden", "true");
-        sp.textContent = (c === " " ? " " : c);
-        node.appendChild(sp);
-      }
-    });
-
-    if (prefersReduced || !window.gsap) return;
-    var chars = document.querySelectorAll("[data-kinetic] .ch");
-    var hero = document.querySelector(".hero");
-    if (!chars.length || !hero) return;
-
-    var setters = [];
-    chars.forEach(function (ch) {
-      setters.push({
-        x:  window.gsap.quickTo(ch, "x",        { duration: 0.7, ease: "expo.out" }),
-        y:  window.gsap.quickTo(ch, "y",        { duration: 0.7, ease: "expo.out" }),
-        rx: window.gsap.quickTo(ch, "rotateX", { duration: 0.7, ease: "expo.out" }),
-        ry: window.gsap.quickTo(ch, "rotateY", { duration: 0.7, ease: "expo.out" })
-      });
-    });
-
-    // Measured on entry, not on every move: reading layout inside mousemove forces a reflow.
-    var rect = hero.getBoundingClientRect();
-    hero.addEventListener("mouseenter", function () { rect = hero.getBoundingClientRect(); });
-    hero.addEventListener("mousemove", function (e) {
-      var dx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
-      var dy = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
-      for (var i = 0; i < chars.length; i++) {
-        var depth = 1 + (i % 3) * 0.45;
-        setters[i].x(dx * 22 * depth);
-        setters[i].y(dy * 12 * depth);
-        setters[i].ry(dx * 10 * depth);
-        setters[i].rx(-dy * 7 * depth);
-      }
-    });
-    hero.addEventListener("mouseleave", function () {
-      for (var i = 0; i < chars.length; i++) {
-        setters[i].x(0); setters[i].y(0); setters[i].rx(0); setters[i].ry(0);
-      }
-    });
-  }
 
   /* ---------- Hero canvas: drifting candle field + scroll-scrub compression ---------- */
   function bootHeroCanvas() {
@@ -344,6 +288,17 @@
 
     // Off-screen, the loop stops entirely instead of spinning empty frames. On screen it draws at
     // 30 fps: the drift is slow enough that 60 looks no different and costs twice the CPU.
+    // Scroll-scrub: the candles compress into a sparkline as the hero leaves, from its top at the
+    // top of the viewport until its bottom is 30% down. The loop already runs while the hero is on
+    // screen, so it reads scrollY (no layout cost) instead of listening to scroll, and eases toward
+    // it so a wheel notch glides rather than jumps.
+    var heroEl = document.querySelector(".hero"), scrubFrom = 0, scrubTo = 1;
+    function measureScrub() {
+      if (!heroEl) return;
+      var r = heroEl.getBoundingClientRect();
+      scrubFrom = r.top + window.scrollY;
+      scrubTo = Math.max(scrubFrom + 1, r.bottom + window.scrollY - window.innerHeight * 0.3);
+    }
     var lastDraw = 0;
     function tick(now) {
       if (!visible) { rafId = 0; lastDraw = 0; return; }
@@ -352,6 +307,8 @@
       var elapsed = lastDraw ? Math.min(now - lastDraw, 100) : 16;
       lastDraw = now;
       clock += elapsed;
+      var target = Math.min(1, Math.max(0, (window.scrollY - scrubFrom) / (scrubTo - scrubFrom)));
+      scrollProgress += (target - scrollProgress) * (1 - Math.exp(-elapsed / 180));
       draw(elapsed / 16);
     }
     function start() { if (!rafId) rafId = requestAnimationFrame(tick); }
@@ -363,23 +320,11 @@
       }, { threshold: 0.01 }).observe(canvas);
     }
 
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", function () { resize(); measureScrub(); });
     resize();
+    measureScrub();
     start();
 
-    // scroll-scrub: compress candles into sparkline as hero exits
-    if (window.gsap && window.ScrollTrigger) {
-      var hero = document.querySelector(".hero");
-      if (hero) {
-        window.ScrollTrigger.create({
-          trigger: hero,
-          start: "top top",
-          end: "bottom 30%",
-          scrub: 0.6,
-          onUpdate: function (self) { scrollProgress = self.progress; }
-        });
-      }
-    }
   }
 
   /* ---------- About scrollytelling: swap roles as chunks scroll past ---------- */
@@ -394,46 +339,16 @@
       }
     }
 
-    // Reduced-motion / no-GSAP fallback: just light up the first role and leave it.
-    if (prefersReduced || !window.gsap || !window.ScrollTrigger) {
-      setActive(0);
-      return;
-    }
-
-    chunks.forEach(function (chunk, i) {
-      window.ScrollTrigger.create({
-        trigger: chunk,
-        start: "top 62%",
-        end: "bottom 42%",
-        onEnter:     function () { setActive(i); },
-        onEnterBack: function () { setActive(i); }
-      });
-    });
+    // Reduced motion: light up the first role and leave it.
     setActive(0);
-  }
-
-  /* ---------- Timeline rail scrub ---------- */
-  function bootTimelineScrub() {
-    var tls = document.querySelectorAll(".timeline");
-    if (!tls.length) return;
-    if (prefersReduced || !window.gsap || !window.ScrollTrigger) {
-      tls.forEach(function (tl) {
-        var fill = tl.querySelector(".timeline-rail-fill");
-        if (fill) fill.style.height = "100%";
+    if (prefersReduced || !("IntersectionObserver" in window)) return;
+    // A role lights up while its chunk crosses the band 42% to 62% down the viewport.
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) setActive(Array.prototype.indexOf.call(chunks, en.target));
       });
-      return;
-    }
-    tls.forEach(function (tl) {
-      var fill = tl.querySelector(".timeline-rail-fill");
-      if (!fill) return;
-      window.ScrollTrigger.create({
-        trigger: tl,
-        start: "top 78%",
-        end: "bottom 62%",
-        scrub: 0.7,
-        onUpdate: function (self) { fill.style.height = (self.progress * 100).toFixed(2) + "%"; }
-      });
-    });
+    }, { rootMargin: "-42% 0px -38% 0px" });
+    chunks.forEach(function (chunk) { io.observe(chunk); });
   }
 
   /* ---------- Featured-Work card canvases (domain-specific demos) ---------- */
@@ -790,73 +705,6 @@
     });
   }
 
-  /* ---------- Magnetic buttons (subtle pull toward cursor) ---------- */
-  function bootMagneticButtons() {
-    if (prefersReduced) return;
-    if (!window.gsap) return;
-    if (!window.matchMedia("(hover: hover)").matches) return;
-
-    var btns = document.querySelectorAll(".btn--primary, .btn--ghost");
-    btns.forEach(function (btn) {
-      var setX = window.gsap.quickTo(btn, "x", { duration: 0.55, ease: "expo.out" });
-      var setY = window.gsap.quickTo(btn, "y", { duration: 0.55, ease: "expo.out" });
-      var strength = 0.28;
-
-      btn.addEventListener("mousemove", function (e) {
-        var rect = btn.getBoundingClientRect();
-        var dx = e.clientX - (rect.left + rect.width / 2);
-        var dy = e.clientY - (rect.top + rect.height / 2);
-        setX(dx * strength);
-        setY(dy * strength);
-      });
-      btn.addEventListener("mouseleave", function () {
-        setX(0); setY(0);
-      });
-    });
-  }
-
-  /* ---------- Counter band ("Receipts") count-up ---------- */
-  function bootCounters() {
-    var nums = document.querySelectorAll(".stat .num[data-target]");
-    if (!nums.length) return;
-
-    function format(n, decimals, prefix, suffix) {
-      var s = (decimals > 0) ? n.toFixed(decimals) : Math.floor(n).toString();
-      return (prefix || "") + s + (suffix || "");
-    }
-
-    nums.forEach(function (el) {
-      var target   = parseFloat(el.dataset.target);
-      var decimals = parseInt(el.dataset.decimals || "0", 10);
-      var prefix   = el.dataset.prefix || "";
-      var suffix   = el.dataset.suffix || "";
-
-      // initial frame (zeroed)
-      el.textContent = format(0, decimals, prefix, suffix);
-
-      if (prefersReduced || !window.gsap || !window.ScrollTrigger) {
-        el.textContent = format(target, decimals, prefix, suffix);
-        return;
-      }
-
-      var obj = { val: 0 };
-      window.ScrollTrigger.create({
-        trigger: el,
-        start: "top 85%",
-        once: true,
-        onEnter: function () {
-          window.gsap.to(obj, {
-            val: target,
-            duration: 1.6,
-            ease: "expo.out",
-            onUpdate: function () { el.textContent = format(obj.val, decimals, prefix, suffix); },
-            onComplete: function () { el.textContent = format(target, decimals, prefix, suffix); }
-          });
-        }
-      });
-    });
-  }
-
   /* ---------- Console signature (DevTools easter egg) ---------- */
   (function signCon() {
     if (!window.console || !console.log) return;
@@ -889,20 +737,11 @@
     } catch (e) {}
   })();
 
-  // Boot order — wait briefly so deferred CDN scripts settle, then init.
   function bootMotion() {
-    bootKineticName();
     bootHeroCanvas();
     bootAboutScroll();
-    bootTimelineScrub();
     bootCardCanvases();
-    bootMagneticButtons();
-    bootCounters();
   }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootMotion);
-  } else {
-    // give deferred CDN scripts a tick to attach
-    setTimeout(bootMotion, 0);
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bootMotion);
+  else bootMotion();
 })();
