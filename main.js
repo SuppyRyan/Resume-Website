@@ -730,7 +730,29 @@
     } catch (e) {}
   })();
 
+  /* ---------- Audit tickmarks: every figure is ticked as it scrolls in ---------- */
+  // The marks draw when their section gets .in from the reveal observer (styles.css); under reduced
+  // motion they are simply there. A legend closes By the numbers, as on a workpaper.
+  var TICK = '<svg class="tick" viewBox="0 0 24 20" aria-hidden="true" focusable="false">' +
+    '<path pathLength="1" d="M2.5 11.2C4.6 12.6 6.3 14.6 7.8 17.4 10.4 10.9 15.1 5.5 21.8 1.8"/></svg>';
+  function bootTickmarks() {
+    var marked = [].slice.call(document.querySelectorAll(".stats-band .num"));
+    [].forEach.call(document.querySelectorAll(".xp li b"), function (b) { if (/\d/.test(b.textContent)) marked.push(b); });
+    var perBox = new Map();
+    marked.forEach(function (el) {
+      var box = el.closest(".reveal");
+      var i = perBox.get(box) || 0;
+      perBox.set(box, i + 1);
+      el.insertAdjacentHTML(el.tagName === "B" ? "afterend" : "beforeend", TICK);
+      var tick = el.tagName === "B" ? el.nextElementSibling : el.lastElementChild;
+      tick.style.setProperty("--i", i);
+    });
+    var band = document.querySelector(".stats-band");
+    if (band) band.insertAdjacentHTML("beforeend", '<p class="tick-legend">' + TICK + "Agreed to résumé</p>");
+  }
+
   function bootMotion() {
+    bootTickmarks();
     bootHeroCanvas();
     bootAboutScroll();
     bootCardCanvases();

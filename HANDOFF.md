@@ -77,6 +77,8 @@ estimated), no pricing for products that are not charging yet.
 
 - 2026-09-26 (2c): Display serif Fraunces (the most common AI-built serif) replaced by Newsreader, a news-reading serif with optical sizes, on every page (`--serif` and the Google Fonts link). Newsreader sets wider, so the hero's "finance · data · audit" line is 0.8 of the name's size (one line on desktop) and each dot stays with the word after it, so a phone never ends a line on a dot.
 
+- 2026-09-26 (2d): Signature: **audit tickmarks**. Every figure is ticked in red pencil as its section scrolls in: the four By the numbers figures one after another (the one focal moment), then a legend "Agreed to résumé", and each bold figure in Experience as its job appears ($300M+, $500K+, $25M+, 20%, 12%, 4%, top 3). `bootTickmarks` in main.js adds the marks and the reveal observer's `.in` draws them (stroke-dashoffset, 0.42 s each, 0.14 s apart); reduced motion shows them drawn. `--tick` (#e0765f dark, #b23b26 light) is used for tickmarks only. Checked at 1400 and 390 px, both themes. This finishes the owner's portfolio clean-up (2a to 2d).
+
 ## Motion rules (keep it fast)
 
 - No animation library. Scroll-linked motion is CSS (`animation-timeline`) or an IntersectionObserver; canvases read `scrollY` in their own loop.
@@ -86,10 +88,13 @@ estimated), no pricing for products that are not charging yet.
 - A canvas animation runs only while on screen (`setupCanvas().run(step)` in `main.js`) and reads
   CSS variables once per theme (`themeVersion`), never per frame.
 - Entrances finish within about half a second; animate `transform` and `opacity`, not layout.
+- Figures get audit tickmarks (`bootTickmarks`). A new figure in bold inside an Experience bullet is ticked automatically; red (`--tick`) is for tickmarks only.
 - No endless animation runs off screen: canvases stop, the marquee pauses (`is-off`), loops that
   only decorate (the scroll cue) play a few times and rest.
 
 **Deploying while over the Vercel limit:** the scheduled task "Portfolio deploy when ready" (hourly, `tools/deploy-when-ready.mjs`, log in `tools/deploy-log.txt`) runs `vercel deploy --prod` until the live site matches this folder and HANDOFF.md is gone, then deletes itself. Set up 25 Sep because Vercel does not retry a Git push it rate-limited.
 
-**Next:** the task deployed at 13:25 on 25 Sep (confirmed: https://ryan-lin.vercel.app/HANDOFF.md returns 404 and the Work page has no filter bar). It should delete itself on its next hourly run. If "Portfolio deploy when ready" is still in Task Scheduler after that, delete it. Then the critique's priorities (owner decisions pending): invented chart numbers, Tickmark buried, home page length, audit-workpaper identity. Sidequest once its legal review clears (owner's call). Open items from `README.md`: real
+**Next (26 Sep):** the owner's clean-up is done (2a to 2d above), which also settles last week's open "audit-workpaper identity" item. Open: bring Creative back into the menus once it has real posts (and fix its copy then); Sidequest once its legal review clears (owner's call); `README.md` items: canonical URL, creative gallery photos.
+
+**Earlier next step (25 Sep, done):** the task deployed at 13:25 on 25 Sep (confirmed: https://ryan-lin.vercel.app/HANDOFF.md returns 404 and the Work page has no filter bar). It should delete itself on its next hourly run. If "Portfolio deploy when ready" is still in Task Scheduler after that, delete it. Then the critique's priorities (owner decisions pending): invented chart numbers, Tickmark buried, home page length, audit-workpaper identity. Sidequest once its legal review clears (owner's call). Open items from `README.md`: real
 `og:image`, canonical URL, creative gallery photos.
