@@ -17,6 +17,8 @@ projects, `ryan-lin` and `resume-website`, deploy from this repo). Pushing to `m
 | SEC Earnings Sentiment & Fundamental Screener | 03 (Data & NLP) | card 3 | — |
 | Mathematical Modeling for Finance | 04 (Modeling) | — | — |
 
+The Creative page (`/creative`) is hidden from the menus since 26 Sep 2026: it only had placeholder tiles.
+
 Projects in `../PROJECTS.md` that are **not** on the site, and why:
 
 | Project | Why not yet | Add when |
@@ -70,6 +72,8 @@ estimated), no pricing for products that are not charging yet.
 - 2026-09-25: The repo is public and Vercel served every file, so `HANDOFF.md` was readable at ryan-lin.vercel.app/HANDOFF.md. `.vercelignore` now keeps `*.md` and `.impeccable/` off the site; `.impeccable/` is also gitignored (critique notes are not for a public repo). Deployed on resume-website-nu-one.vercel.app (HANDOFF.md → 404). **ryan-lin.vercel.app did not redeploy: Vercel returned "Deployment rate limited — retry in 24 hours"** (Hobby plan daily limit; every push here deploys twice, once per Vercel project). A failed deploy does not retry by itself: the next push after the limit resets carries it.
 
 - 2026-09-26 (2a): Design review with the new design skills (Emil Kowalski's design engineering, Impeccable, taste): 22/32, reads as a template; the owner chose a clean-up that keeps the palette and layout, a font swap and an audit-tickmark signature, shipped in four steps. This step removes the animation library: GSAP and ScrollTrigger (two CDN scripts on every page) are gone with the three things only they did, the Receipts count-up (it showed $298M+, 3% and a 3.94 GPA for over a second), magnetic buttons and the name letters chasing the mouse (both moved targets away from the pointer). The three scroll effects stay without it: the timeline rail is a CSS scroll-driven animation on `transform` (it animated `height`), the About roles light from an IntersectionObserver band, and the hero candles read `scrollY` inside their existing draw loop. Checked at 1400 and 390 px: no console errors, no sideways scroll, pop-up opens, no GSAP requests.
+
+- 2026-09-26 (2b): Template tells removed, palette and layout kept. Gone: the rotated "// fremont · ca · ed. 2026" stamp, the vertical SCROLL cue, the hero eyebrow and its four chips, the uppercase label above every section, the footer marquee ("Est. 2026"), the green "open to connect" dot, gold glow shadows (now ordinary offset shadows) and every em-dash in the copy (rewritten; date ranges keep an en dash). "Receipts." is now "By the numbers."; Contact's two column labels are real headings. **Creative is out of every menu** (the page still loads at /creative; bring it back when it has real posts, and fix its copy then). Checked at 1400 and 390 px with wheel scrolling: every section reveals, no console errors, no sideways scroll.
 
 ## Motion rules (keep it fast)
 

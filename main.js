@@ -150,13 +150,6 @@
     openModal(inner);
   });
 
-  /* ---------- footer marquee: runs only while on screen ---------- */
-  var marquee = document.querySelector(".footer-marquee");
-  if (marquee && "IntersectionObserver" in window) {
-    marquee.classList.add("is-off");
-    new IntersectionObserver(function (entries) { marquee.classList.toggle("is-off", !entries[0].isIntersecting); }).observe(marquee);
-  }
-
   /* ---------- footer year ---------- */
   var y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();
