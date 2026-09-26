@@ -75,6 +75,8 @@ estimated), no pricing for products that are not charging yet.
 
 - 2026-09-26 (2b): Template tells removed, palette and layout kept. Gone: the rotated "// fremont · ca · ed. 2026" stamp, the vertical SCROLL cue, the hero eyebrow and its four chips, the uppercase label above every section, the footer marquee ("Est. 2026"), the green "open to connect" dot, gold glow shadows (now ordinary offset shadows) and every em-dash in the copy (rewritten; date ranges keep an en dash). "Receipts." is now "By the numbers."; Contact's two column labels are real headings. **Creative is out of every menu** (the page still loads at /creative; bring it back when it has real posts, and fix its copy then). Checked at 1400 and 390 px with wheel scrolling: every section reveals, no console errors, no sideways scroll.
 
+- 2026-09-26 (2c): Display serif Fraunces (the most common AI-built serif) replaced by Newsreader, a news-reading serif with optical sizes, on every page (`--serif` and the Google Fonts link). Newsreader sets wider, so the hero's "finance · data · audit" line is 0.8 of the name's size (one line on desktop) and each dot stays with the word after it, so a phone never ends a line on a dot.
+
 ## Motion rules (keep it fast)
 
 - No animation library. Scroll-linked motion is CSS (`animation-timeline`) or an IntersectionObserver; canvases read `scrollY` in their own loop.

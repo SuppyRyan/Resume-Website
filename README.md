@@ -73,7 +73,7 @@ follow the DNS instructions. The free `*.vercel.app` subdomain is perfectly fine
 ## Notes on the design
 
 - Bespoke CSS (no Tailwind/framework) for a cohesive warm-premium look and to keep it
-  zero-dependency and fast. Fonts: **Fraunces** (display serif) + **Manrope** (sans) +
+  zero-dependency and fast. Fonts: **Newsreader** (display serif) + **Manrope** (sans) +
   **Space Mono** (labels), loaded from Google Fonts.
 - Dark is the default theme; the sun/moon button toggles light mode and the choice is
   remembered in `localStorage`.
