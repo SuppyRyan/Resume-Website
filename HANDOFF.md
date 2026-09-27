@@ -1,7 +1,7 @@
 # Portfolio (resume-website) — Handoff
 
 Ryan's personal site and portfolio. Four static pages, no build step (see `README.md` for the
-file layout and design notes). This file is the authority on what the site shows and how projects
+file layout). The style guide is `DESIGN.md` (tokens, the tickmark signature, motion rules, what not to bring back). This file is the authority on what the site shows and how projects
 get onto it.
 
 **Live:** https://ryan-lin.vercel.app (also https://resume-website-nu-one.vercel.app; both Vercel
@@ -78,6 +78,8 @@ estimated), no pricing for products that are not charging yet.
 - 2026-09-26 (2c): Display serif Fraunces (the most common AI-built serif) replaced by Newsreader, a news-reading serif with optical sizes, on every page (`--serif` and the Google Fonts link). Newsreader sets wider, so the hero's "finance · data · audit" line is 0.8 of the name's size (one line on desktop) and each dot stays with the word after it, so a phone never ends a line on a dot.
 
 - 2026-09-26 (2d): Signature: **audit tickmarks**. Every figure is ticked in red pencil as its section scrolls in: the four By the numbers figures one after another (the one focal moment), then a legend "Agreed to résumé", and each bold figure in Experience as its job appears ($300M+, $500K+, $25M+, 20%, 12%, 4%, top 3). `bootTickmarks` in main.js adds the marks and the reveal observer's `.in` draws them (stroke-dashoffset, 0.42 s each, 0.14 s apart); reduced motion shows them drawn. `--tick` (#e0765f dark, #b23b26 light) is used for tickmarks only. Checked at 1400 and 390 px, both themes. This finishes the owner's portfolio clean-up (2a to 2d).
+
+- 2026-09-26: `DESIGN.md` written from the shipped site (owner: keep the updates in the style guide): North Star "The Evening Workpaper", one copper accent, red pencil for tickmarks only, Newsreader over Manrope, no animation library, and the tells not to bring back.
 
 ## Motion rules (keep it fast)
 
