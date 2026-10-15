@@ -28,6 +28,7 @@ Projects in `../PROJECTS.md` that are **not** on the site, and why:
 | cpa-reference | Internal data pipeline behind Tickmark, not a product. | Folded into the Tickmark entry if ever mentioned. |
 | executive-assistant | Private personal-admin setup. | Never (private by nature). |
 | workspace | Internal tooling (Obsidian sync, backups). | Never. |
+| home-redesign | Private by nature: a 3D model of the owner's own home for redecorating, kept as a private Artifact (`../home-redesign/HANDOFF.md`). | Only as a version built on a sample house, if the owner wants it shown. |
 | curious-little-one | Client website for a San Ramon child care center; built 25 Sep 2026 but not yet approved by the client or moved onto her domain (`../curious-little-one/HANDOFF.md`). The gallery shows real children, so ask the owner before using screenshots. | It is live on curiouslittle1.info and the client is happy to be named; then link the live domain. |
 
 ## Adding a project to the site
